@@ -42,6 +42,7 @@ import enhancedFlashcardsRoutes from './routes/enhanced-flashcards.js';
 import enhancedGamingRoutes from './routes/enhanced-gaming.js';
 import contentManagementRoutes from './routes/content-management.js';
 import classroomRoutes from './routes/classrooms.js';
+import studentAssistanceRoutes from './routes/student-assistance.js';
 
 // Import middleware
 import { authenticateUser } from './middleware/auth.js';
@@ -162,6 +163,7 @@ app.use('/api/enhanced-flashcards', authenticateUser, enhancedFlashcardsRoutes);
 app.use('/api/enhanced-gaming', authenticateUser, enhancedGamingRoutes);
 app.use('/api/content-management', authenticateUser, contentManagementRoutes);
 app.use('/api/classrooms', authenticateUser, classroomRoutes);
+app.use('/api/student-assistance', authenticateUser, studentAssistanceRoutes);
 
 // File upload endpoint
 app.post('/api/upload', authenticateUser, uploadHandler, (req, res) => {
