@@ -1,2 +1,0 @@
-import{j as t}from"./index-C4wJH_P8.js";import"./vendor-CWSDbGja.js";import"./utils-DNjMRfKp.js";import"./ui-CiAGNmFm.js";const o=()=>t.jsxs("div",{className:"text-center",children:[t.jsx("h1",{className:"text-2xl font-bold text-gray-900 dark:text-white mb-4",children:"AITutorPage"}),t.jsx("p",{className:"text-gray-600 dark:text-gray-300",children:"Coming soon..."})]});export{o as default};
-//# sourceMappingURL=AITutorPage-CRX4reem.js.map

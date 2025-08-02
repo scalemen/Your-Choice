@@ -443,7 +443,7 @@ export const gameAchievements = pgTable('game_achievements', {
 }));
 
 // User Achievement Progress and Unlocks
-export const userAchievements = pgTable('user_achievements', {
+export const userGameAchievements = pgTable('user_game_achievements', {
   id: serial('id').primaryKey(),
   userId: integer('user_id').references(() => users.id).notNull(),
   achievementId: integer('achievement_id').references(() => gameAchievements.id).notNull(),
@@ -605,20 +605,20 @@ export const gameAchievementsRelations = relations(gameAchievements, ({ one, man
     fields: [gameAchievements.gameId],
     references: [educationalGames.id]
   }),
-  userAchievements: many(userAchievements)
+      userAchievements: many(userGameAchievements)
 }));
 
-export const userAchievementsRelations = relations(userAchievements, ({ one }) => ({
+export const userGameAchievementsRelations = relations(userGameAchievements, ({ one }) => ({
   user: one(users, {
-    fields: [userAchievements.userId],
+    fields: [userGameAchievements.userId],
     references: [users.id]
   }),
   achievement: one(gameAchievements, {
-    fields: [userAchievements.achievementId],
+    fields: [userGameAchievements.achievementId],
     references: [gameAchievements.id]
   }),
   gameSession: one(gameSessions, {
-    fields: [userAchievements.gameSessionId],
+    fields: [userGameAchievements.gameSessionId],
     references: [gameSessions.id]
   })
 }));

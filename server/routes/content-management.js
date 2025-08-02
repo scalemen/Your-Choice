@@ -10,18 +10,14 @@ import {
   noteToFlashcardJobs,
   contentRecommendations
 } from '../db/preloaded-content-schema.js';
-import { 
-  flashcardDecks, 
-  flashcards,
-  enhancedNotes 
-} from '../db/index.js';
-import { authenticateToken } from '../middleware/auth.js';
+// Tables will be accessed through db.schema
+import { authenticateUser } from '../middleware/auth.js';
 import { uploadHandler } from '../middleware/upload.js';
 import OpenAI from 'openai';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs/promises';
-import csv from 'csv-parse';
+// import csv from 'csv-parse'; // TODO: Install csv-parse package when needed
 
 const router = express.Router();
 const openai = new OpenAI({
@@ -29,7 +25,7 @@ const openai = new OpenAI({
 });
 
 // Apply authentication to all routes
-router.use(authenticateToken);
+router.use(authenticateUser);
 
 // PRELOADED CONTENT DISCOVERY
 
@@ -1032,32 +1028,31 @@ async function processCsvFile(filePath) {
   const fileContent = await fs.readFile(filePath, 'utf-8');
   const records = [];
   
-  return new Promise((resolve, reject) => {
-    const parser = csv.parse({
-      columns: true,
-      skip_empty_lines: true,
-      delimiter: [',', '\t'] // Support both comma and tab delimited
-    });
-
-    parser.on('readable', function() {
-      let record;
-      while (record = parser.read()) {
-        records.push({
-          front: record.front || record.question || record.term || Object.values(record)[0],
-          back: record.back || record.answer || record.definition || Object.values(record)[1],
-          hint: record.hint,
-          explanation: record.explanation,
-          tags: record.tags ? record.tags.split(',').map(t => t.trim()) : []
-        });
-      }
-    });
-
-    parser.on('error', reject);
-    parser.on('end', () => resolve(records));
-    
-    parser.write(fileContent);
-    parser.end();
-  });
+  // Simple CSV processing without external library
+  const lines = fileContent.split('\n').filter(line => line.trim());
+  
+  if (lines.length < 2) {
+    return [];
+  }
+  
+  // Parse header row
+  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+  
+  // Parse data rows
+  for (let i = 1; i < lines.length; i++) {
+    const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+    if (values.length >= 2) {
+      records.push({
+        front: values[0] || '',
+        back: values[1] || '',
+        hint: values[2] || '',
+        explanation: values[3] || '',
+        tags: values[4] ? values[4].split('|').map(t => t.trim()).filter(Boolean) : []
+      });
+    }
+  }
+  
+  return records;
 }
 
 async function processJsonFile(filePath) {

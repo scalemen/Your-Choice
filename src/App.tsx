@@ -34,6 +34,8 @@ const SocialPage = React.lazy(() => import('@/pages/social/SocialPage'))
 const GamesPage = React.lazy(() => import('@/pages/games/GamesPage'))
 const SettingsPage = React.lazy(() => import('@/pages/settings/SettingsPage'))
 const ProfilePage = React.lazy(() => import('@/pages/profile/ProfilePage'))
+const SkillsAssessmentPage = React.lazy(() => import('@/pages/SkillsAssessmentPage'))
+const MentorshipPage = React.lazy(() => import('@/pages/MentorshipPage'))
 const NotFoundPage = React.lazy(() => import('@/pages/NotFoundPage'))
 
 // Protected Route wrapper
@@ -180,6 +182,10 @@ const App: React.FC = () => {
                         {/* Social & Gaming */}
                         <Route path="social" element={<SocialPage />} />
                         <Route path="games" element={<GamesPage />} />
+                        
+                        {/* Professional Features */}
+                        <Route path="skills-assessment" element={<SkillsAssessmentPage />} />
+                        <Route path="mentorship" element={<MentorshipPage />} />
                         
                         {/* User Management */}
                         <Route path="profile" element={<ProfilePage />} />

@@ -3,13 +3,14 @@ import { relations } from 'drizzle-orm';
 
 // Users table with comprehensive profile data
 export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
+  id: uuid('id').defaultRandom().primaryKey(),
   email: varchar('email', { length: 255 }).unique().notNull(),
   password: varchar('password', { length: 255 }),
   googleId: varchar('google_id', { length: 255 }).unique(),
-  firstName: varchar('first_name', { length: 100 }).notNull(),
-  lastName: varchar('last_name', { length: 100 }).notNull(),
-  avatar: text('avatar'),
+  firstName: varchar('first_name', { length: 100 }),
+  lastName: varchar('last_name', { length: 100 }),
+  fullName: varchar('full_name', { length: 200 }).notNull(),
+  profilePicture: text('profile_picture'),
   bio: text('bio'),
   learningStyle: varchar('learning_style', { length: 50 }),
   educationLevel: varchar('education_level', { length: 50 }),
@@ -23,15 +24,16 @@ export const users = pgTable('users', {
   points: integer('points').default(0),
   streak: integer('streak').default(0),
   lastActive: timestamp('last_active').defaultNow(),
+  lastLoginAt: timestamp('last_login_at'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow()
 });
 
 // Folders for organizing notes
 export const folders = pgTable('folders', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
-  parentId: integer('parent_id').references(() => folders.id),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  parentFolderId: uuid('parent_folder_id').references(() => folders.id),
   name: varchar('name', { length: 255 }).notNull(),
   color: varchar('color', { length: 7 }).default('#3B82F6'),
   icon: varchar('icon', { length: 50 }),
@@ -44,9 +46,9 @@ export const folders = pgTable('folders', {
 
 // Notes with rich content and handwriting support
 export const notes = pgTable('notes', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
-  folderId: integer('folder_id').references(() => folders.id),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  folderId: uuid('folder_id').references(() => folders.id),
   title: varchar('title', { length: 255 }).notNull(),
   content: jsonb('content').default({}), // Rich text content
   handwritingData: jsonb('handwriting_data').default([]), // Stroke data for handwriting
@@ -97,8 +99,8 @@ export const aiChats = pgTable('ai_chats', {
 
 // Study plans and scheduling
 export const studyPlans = pgTable('study_plans', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description'),
   subject: varchar('subject', { length: 100 }),
@@ -118,9 +120,9 @@ export const studyPlans = pgTable('study_plans', {
 
 // Study sessions tracking
 export const studySessions = pgTable('study_sessions', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
-  studyPlanId: integer('study_plan_id').references(() => studyPlans.id),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  studyPlanId: uuid('study_plan_id').references(() => studyPlans.id),
   noteId: integer('note_id').references(() => notes.id),
   subject: varchar('subject', { length: 100 }),
   startTime: timestamp('start_time').notNull(),
@@ -131,6 +133,22 @@ export const studySessions = pgTable('study_sessions', {
   achievements: jsonb('achievements').default([]),
   notes: text('notes'),
   createdAt: timestamp('created_at').defaultNow()
+});
+
+// Homework assignments
+export const homeworkAssignments = pgTable('homework_assignments', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description'),
+  subject: varchar('subject', { length: 100 }),
+  dueDate: timestamp('due_date'),
+  priority: varchar('priority', { length: 20 }).default('medium'),
+  difficulty: varchar('difficulty', { length: 20 }).default('medium'),
+  status: varchar('status', { length: 20 }).default('pending'),
+  completedAt: timestamp('completed_at'),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
 });
 
 // Homework problems and solutions
@@ -156,8 +174,8 @@ export const homeworkProblems = pgTable('homework_problems', {
 
 // Quizzes and assessments
 export const quizzes = pgTable('quizzes', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description'),
   subject: varchar('subject', { length: 100 }),
@@ -174,11 +192,24 @@ export const quizzes = pgTable('quizzes', {
   updatedAt: timestamp('updated_at').defaultNow()
 });
 
+// Quiz questions
+export const quizQuestions = pgTable('quiz_questions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  quizId: uuid('quiz_id').references(() => quizzes.id).notNull(),
+  question: text('question').notNull(),
+  type: varchar('type', { length: 20 }).default('multiple_choice'),
+  options: jsonb('options').default([]),
+  correctAnswer: text('correct_answer').notNull(),
+  explanation: text('explanation'),
+  points: integer('points').default(1),
+  createdAt: timestamp('created_at').defaultNow()
+});
+
 // Quiz attempts and results
 export const quizAttempts = pgTable('quiz_attempts', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
-  quizId: integer('quiz_id').references(() => quizzes.id).notNull(),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  quizId: uuid('quiz_id').references(() => quizzes.id).notNull(),
   answers: jsonb('answers').default({}),
   score: decimal('score', { precision: 5, scale: 2 }).notNull(),
   timeSpent: integer('time_spent'), // in seconds
@@ -192,9 +223,9 @@ export const quizAttempts = pgTable('quiz_attempts', {
 
 // Flashcards for spaced repetition
 export const flashcards = pgTable('flashcards', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
-  deckId: integer('deck_id').references(() => flashcardDecks.id),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  deckId: uuid('deck_id').references(() => flashcardDecks.id),
   question: text('question').notNull(),
   answer: text('answer').notNull(),
   questionImage: text('question_image'),
@@ -212,8 +243,8 @@ export const flashcards = pgTable('flashcards', {
 
 // Flashcard decks
 export const flashcardDecks = pgTable('flashcard_decks', {
-  id: serial('id').primaryKey(),
-  userId: integer('user_id').references(() => users.id).notNull(),
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
   name: varchar('name', { length: 255 }).notNull(),
   description: text('description'),
   subject: varchar('subject', { length: 100 }),

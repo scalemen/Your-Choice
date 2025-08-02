@@ -203,7 +203,7 @@ export const leaderboards = pgTable('leaderboards', {
 }));
 
 // Leaderboard entries for all users
-export const leaderboardEntries = pgTable('leaderboard_entries', {
+export const personalizationLeaderboardEntries = pgTable('personalization_leaderboard_entries', {
   id: serial('id').primaryKey(),
   leaderboardId: integer('leaderboard_id').references(() => leaderboards.id).notNull(),
   userId: integer('user_id').references(() => users.id).notNull(),
@@ -254,7 +254,7 @@ export const achievementCategories = pgTable('achievement_categories', {
   createdAt: timestamp('created_at').defaultNow()
 });
 
-export const achievements = pgTable('achievements', {
+export const personalizationAchievements = pgTable('personalization_achievements', {
   id: serial('id').primaryKey(),
   categoryId: integer('category_id').references(() => achievementCategories.id),
   
@@ -303,7 +303,7 @@ export const achievements = pgTable('achievements', {
 export const userAchievementProgress = pgTable('user_achievement_progress', {
   id: serial('id').primaryKey(),
   userId: integer('user_id').references(() => users.id).notNull(),
-  achievementId: integer('achievement_id').references(() => achievements.id).notNull(),
+  achievementId: integer('achievement_id').references(() => personalizationAchievements.id).notNull(),
   
   // Progress Tracking
   currentProgress: integer('current_progress').default(0),
@@ -327,7 +327,7 @@ export const userAchievementProgress = pgTable('user_achievement_progress', {
 }));
 
 // Social comparison and friend connections
-export const friendships = pgTable('friendships', {
+export const personalizationFriendships = pgTable('personalization_friendships', {
   id: serial('id').primaryKey(),
   requesterId: integer('requester_id').references(() => users.id).notNull(),
   addresseeId: integer('addressee_id').references(() => users.id).notNull(),
@@ -449,20 +449,20 @@ export const personalizedRecommendationsRelations = relations(personalizedRecomm
   })
 }));
 
-export const leaderboardEntriesRelations = relations(leaderboardEntries, ({ one }) => ({
-  leaderboard: one(leaderboards, {
-    fields: [leaderboardEntries.leaderboardId],
-    references: [leaderboards.id]
-  }),
-  user: one(users, {
-    fields: [leaderboardEntries.userId],
-    references: [users.id]
-  })
+export const personalizationLeaderboardEntriesRelations = relations(personalizationLeaderboardEntries, ({ one }) => ({
+      leaderboard: one(leaderboards, {
+      fields: [personalizationLeaderboardEntries.leaderboardId],
+      references: [leaderboards.id]
+    }),
+    user: one(users, {
+      fields: [personalizationLeaderboardEntries.userId],
+      references: [users.id]
+    })
 }));
 
-export const achievementsRelations = relations(achievements, ({ one, many }) => ({
+export const personalizationAchievementsRelations = relations(personalizationAchievements, ({ one, many }) => ({
   category: one(achievementCategories, {
-    fields: [achievements.categoryId],
+    fields: [personalizationAchievements.categoryId],
     references: [achievementCategories.id]
   }),
   userProgress: many(userAchievementProgress)
@@ -473,19 +473,19 @@ export const userAchievementProgressRelations = relations(userAchievementProgres
     fields: [userAchievementProgress.userId],
     references: [users.id]
   }),
-  achievement: one(achievements, {
+  achievement: one(personalizationAchievements, {
     fields: [userAchievementProgress.achievementId],
-    references: [achievements.id]
+    references: [personalizationAchievements.id]
   })
 }));
 
-export const friendshipsRelations = relations(friendships, ({ one }) => ({
+export const personalizationFriendshipsRelations = relations(personalizationFriendships, ({ one }) => ({
   requester: one(users, {
-    fields: [friendships.requesterId],
+    fields: [personalizationFriendships.requesterId],
     references: [users.id]
   }),
   addressee: one(users, {
-    fields: [friendships.addresseeId],
+    fields: [personalizationFriendships.addresseeId],
     references: [users.id]
   })
 }));

@@ -9,15 +9,15 @@ import {
   gameLeaderboards,
   leaderboardEntries,
   gameAchievements,
-  userAchievements,
+  userGameAchievements,
   gameAnalytics
 } from '../db/enhanced-gaming-schema.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { authenticateUser } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Apply authentication to all routes
-router.use(authenticateToken);
+router.use(authenticateUser);
 
 // GAME CATALOG AND DISCOVERY
 
@@ -186,16 +186,16 @@ router.get('/games/:gameId', async (req, res) => {
       difficulty: gameAchievements.difficulty,
       pointsReward: gameAchievements.pointsReward,
       badgeIcon: gameAchievements.badgeIcon,
-      isUnlocked: userAchievements.isUnlocked,
-      unlockedAt: userAchievements.unlockedAt,
-      progress: userAchievements.progress
+      isUnlocked: userGameAchievements.isUnlocked,
+      unlockedAt: userGameAchievements.unlockedAt,
+      progress: userGameAchievements.progress
     })
     .from(gameAchievements)
     .leftJoin(
-      userAchievements, 
+      userGameAchievements, 
       and(
-        eq(gameAchievements.id, userAchievements.achievementId),
-        eq(userAchievements.userId, req.user.id)
+        eq(gameAchievements.id, userGameAchievements.achievementId),
+        eq(userGameAchievements.userId, req.user.id)
       )
     )
     .where(eq(gameAchievements.gameId, game.id))
@@ -623,19 +623,19 @@ router.get('/achievements', async (req, res) => {
       isSecret: gameAchievements.isSecret,
       gameId: gameAchievements.gameId,
       // User achievement data
-      progress: userAchievements.progress,
-      currentValue: userAchievements.currentValue,
-      isUnlocked: userAchievements.isUnlocked,
-      unlockedAt: userAchievements.unlockedAt,
-      isDisplayed: userAchievements.isDisplayed,
-      isPinned: userAchievements.isPinned
+      progress: userGameAchievements.progress,
+      currentValue: userGameAchievements.currentValue,
+      isUnlocked: userGameAchievements.isUnlocked,
+      unlockedAt: userGameAchievements.unlockedAt,
+      isDisplayed: userGameAchievements.isDisplayed,
+      isPinned: userGameAchievements.isPinned
     })
     .from(gameAchievements)
     .leftJoin(
-      userAchievements,
+      userGameAchievements,
       and(
-        eq(gameAchievements.id, userAchievements.achievementId),
-        eq(userAchievements.userId, req.user.id)
+        eq(gameAchievements.id, userGameAchievements.achievementId),
+        eq(userGameAchievements.userId, req.user.id)
       )
     );
 
@@ -654,20 +654,20 @@ router.get('/achievements', async (req, res) => {
     }
 
     if (unlocked === 'true') {
-      conditions.push(eq(userAchievements.isUnlocked, true));
+      conditions.push(eq(userGameAchievements.isUnlocked, true));
     } else if (unlocked === 'false') {
       conditions.push(
         or(
-          eq(userAchievements.isUnlocked, false),
-          eq(userAchievements.isUnlocked, null)
+          eq(userGameAchievements.isUnlocked, false),
+          eq(userGameAchievements.isUnlocked, null)
         )
       );
     }
 
     query = query.where(and(...conditions));
     query = query.orderBy(
-      desc(userAchievements.isUnlocked),
-      desc(userAchievements.unlockedAt),
+      desc(userGameAchievements.isUnlocked),
+      desc(userGameAchievements.unlockedAt),
       asc(gameAchievements.difficulty)
     );
 
@@ -773,18 +773,18 @@ router.get('/analytics', async (req, res) => {
       description: gameAchievements.description,
       pointsReward: gameAchievements.pointsReward,
       badgeIcon: gameAchievements.badgeIcon,
-      unlockedAt: userAchievements.unlockedAt
+      unlockedAt: userGameAchievements.unlockedAt
     })
-    .from(userAchievements)
-    .innerJoin(gameAchievements, eq(userAchievements.achievementId, gameAchievements.id))
+    .from(userGameAchievements)
+    .innerJoin(gameAchievements, eq(userGameAchievements.achievementId, gameAchievements.id))
     .where(
       and(
-        eq(userAchievements.userId, req.user.id),
-        eq(userAchievements.isUnlocked, true),
-        gte(userAchievements.unlockedAt, startDate)
+        eq(userGameAchievements.userId, req.user.id),
+        eq(userGameAchievements.isUnlocked, true),
+        gte(userGameAchievements.unlockedAt, startDate)
       )
     )
-    .orderBy(desc(userAchievements.unlockedAt))
+    .orderBy(desc(userGameAchievements.unlockedAt))
     .limit(10);
 
     res.json({
@@ -821,10 +821,10 @@ async function checkAndUnlockAchievements(userId, gameId, session) {
     const availableAchievements = await db.select()
       .from(gameAchievements)
       .leftJoin(
-        userAchievements,
+        userGameAchievements,
         and(
-          eq(gameAchievements.id, userAchievements.achievementId),
-          eq(userAchievements.userId, userId)
+          eq(gameAchievements.id, userGameAchievements.achievementId),
+          eq(userGameAchievements.userId, userId)
         )
       )
       .where(
@@ -832,8 +832,8 @@ async function checkAndUnlockAchievements(userId, gameId, session) {
           eq(gameAchievements.gameId, gameId),
           eq(gameAchievements.isActive, true),
           or(
-            eq(userAchievements.isUnlocked, false),
-            eq(userAchievements.isUnlocked, null)
+            eq(userGameAchievements.isUnlocked, false),
+            eq(userGameAchievements.isUnlocked, null)
           )
         )
       );
@@ -861,19 +861,19 @@ async function checkAndUnlockAchievements(userId, gameId, session) {
 
       if (achieved) {
         // Create or update user achievement
-        if (achievement.userAchievements) {
+        if (achievement.userGameAchievements) {
           // Update existing record
-          await db.update(userAchievements)
+          await db.update(userGameAchievements)
             .set({
               isUnlocked: true,
               unlockedAt: new Date(),
               gameSessionId: session.id,
               progress: 100
             })
-            .where(eq(userAchievements.id, achievement.userAchievements.id));
+            .where(eq(userGameAchievements.id, achievement.userGameAchievements.id));
         } else {
           // Create new record
-          await db.insert(userAchievements).values({
+          await db.insert(userGameAchievements).values({
             userId,
             achievementId: achievement.id,
             isUnlocked: true,

@@ -11,7 +11,7 @@ import {
   academicSupportTickets,
   studyRecommendations
 } from '../db/student-assistance-schema.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { authenticateUser } from '../middleware/auth.js';
 import OpenAI from 'openai';
 
 const router = express.Router();
@@ -20,7 +20,7 @@ const openai = new OpenAI({
 });
 
 // Apply authentication to all routes
-router.use(authenticateToken);
+router.use(authenticateUser);
 
 // AI STUDY BUDDY ENDPOINTS
 

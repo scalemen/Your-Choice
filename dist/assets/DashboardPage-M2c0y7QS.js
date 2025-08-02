@@ -1,0 +1,2 @@
+import{j as t}from"./index-BGF07i1s.js";import"./vendor-BDjI7W5z.js";import"./utils-DgGFAW83.js";import"./ui-CgDvJe3x.js";const o=()=>t.jsxs("div",{className:"text-center",children:[t.jsx("h1",{className:"text-3xl font-bold text-gray-900 dark:text-white mb-4",children:"StudyGenius Dashboard"}),t.jsx("p",{className:"text-gray-600 dark:text-gray-300",children:"Main dashboard coming soon"})]});export{o as default};
+//# sourceMappingURL=DashboardPage-M2c0y7QS.js.map

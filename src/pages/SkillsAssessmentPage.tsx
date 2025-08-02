@@ -71,6 +71,7 @@ interface Assessment {
   passingScore: number;
   certificationType: string;
   industryRecognition: string;
+  questions?: any[];
 }
 
 interface UserSkill {

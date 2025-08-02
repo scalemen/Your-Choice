@@ -22,7 +22,7 @@ import {
   studyPlans,
   enhancedQuizzes
 } from '../db/index.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { authenticateUser } from '../middleware/auth.js';
 import { uploadHandler } from '../middleware/upload.js';
 import OpenAI from 'openai';
 import multer from 'multer';
@@ -35,7 +35,7 @@ const openai = new OpenAI({
 });
 
 // Apply authentication to all routes
-router.use(authenticateToken);
+router.use(authenticateUser);
 
 // INSTITUTIONS MANAGEMENT
 

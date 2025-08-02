@@ -263,7 +263,7 @@ export const studyStreaks = pgTable('study_streaks', {
 }));
 
 // Learning Analytics and Insights
-export const learningAnalytics = pgTable('learning_analytics', {
+export const studentLearningAnalytics = pgTable('student_learning_analytics', {
   id: serial('id').primaryKey(),
   analyticsId: uuid('analytics_id').defaultRandom().notNull().unique(),
   
@@ -483,9 +483,9 @@ export const studyStreaksRelations = relations(studyStreaks, ({ one }) => ({
   })
 }));
 
-export const learningAnalyticsRelations = relations(learningAnalytics, ({ one }) => ({
+export const studentLearningAnalyticsRelations = relations(studentLearningAnalytics, ({ one }) => ({
   user: one(users, {
-    fields: [learningAnalytics.userId],
+    fields: [studentLearningAnalytics.userId],
     references: [users.id]
   })
 }));

@@ -1,0 +1,2 @@
+import{j as e}from"./index-BGF07i1s.js";import"./vendor-BDjI7W5z.js";import"./utils-DgGFAW83.js";import"./ui-CgDvJe3x.js";const l=()=>e.jsxs("div",{className:"text-center",children:[e.jsx("h1",{className:"text-2xl font-bold text-gray-900 dark:text-white mb-4",children:"WellnessPage"}),e.jsx("p",{className:"text-gray-600 dark:text-gray-300",children:"Coming soon..."})]});export{l as default};
+//# sourceMappingURL=WellnessPage-D4Xismy8.js.map

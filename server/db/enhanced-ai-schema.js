@@ -153,8 +153,8 @@ export const aiMessages = pgTable('ai_messages', {
   createdIdx: index('ai_messages_created_idx').on(table.createdAt)
 }));
 
-// Homework Problem Database and Solutions
-export const homeworkProblems = pgTable('homework_problems', {
+// Enhanced Homework Problem Database and Solutions (renamed to avoid conflict)
+export const enhancedHomeworkProblems = pgTable('enhanced_homework_problems', {
   id: serial('id').primaryKey(),
   problemId: uuid('problem_id').defaultRandom().notNull().unique(),
   
@@ -218,7 +218,7 @@ export const homeworkSubmissions = pgTable('homework_submissions', {
   submissionId: uuid('submission_id').defaultRandom().notNull().unique(),
   
   userId: integer('user_id').references(() => users.id).notNull(),
-  problemId: integer('problem_id').references(() => homeworkProblems.id),
+  problemId: integer('problem_id').references(() => enhancedHomeworkProblems.id),
   conversationId: integer('conversation_id').references(() => aiConversations.id),
   
   // Original submission
@@ -404,7 +404,7 @@ export const aiKnowledgeBase = pgTable('ai_knowledge_base', {
 }));
 
 // User Learning Analytics and AI Insights
-export const learningAnalytics = pgTable('learning_analytics', {
+export const aiLearningAnalytics = pgTable('ai_learning_analytics', {
   id: serial('id').primaryKey(),
   userId: integer('user_id').references(() => users.id).notNull().unique(),
   
@@ -483,9 +483,9 @@ export const aiMessagesRelations = relations(aiMessages, ({ one }) => ({
   })
 }));
 
-export const homeworkProblemsRelations = relations(homeworkProblems, ({ one, many }) => ({
+export const enhancedHomeworkProblemsRelations = relations(enhancedHomeworkProblems, ({ one, many }) => ({
   verifiedBy: one(users, {
-    fields: [homeworkProblems.verifiedBy],
+    fields: [enhancedHomeworkProblems.verifiedBy],
     references: [users.id]
   }),
   submissions: many(homeworkSubmissions)
@@ -496,9 +496,9 @@ export const homeworkSubmissionsRelations = relations(homeworkSubmissions, ({ on
     fields: [homeworkSubmissions.userId],
     references: [users.id]
   }),
-  problem: one(homeworkProblems, {
+  problem: one(enhancedHomeworkProblems, {
     fields: [homeworkSubmissions.problemId],
-    references: [homeworkProblems.id]
+    references: [enhancedHomeworkProblems.id]
   }),
   conversation: one(aiConversations, {
     fields: [homeworkSubmissions.conversationId],
@@ -524,9 +524,9 @@ export const aiKnowledgeBaseRelations = relations(aiKnowledgeBase, ({ one }) => 
   })
 }));
 
-export const learningAnalyticsRelations = relations(learningAnalytics, ({ one }) => ({
+export const aiLearningAnalyticsRelations = relations(aiLearningAnalytics, ({ one }) => ({
   user: one(users, {
-    fields: [learningAnalytics.userId],
+    fields: [aiLearningAnalytics.userId],
     references: [users.id]
   })
 }));

@@ -1,6 +1,6 @@
 import express from 'express';
 import { body, validationResult, param, query } from 'express-validator';
-import { db, games, gameScores, users, achievements, userAchievementProgress, leaderboardEntries, leaderboards } from '../db/index.js';
+import { db } from '../db/index.js';
 import { eq, and, desc, sql, gte, lte, inArray, or } from 'drizzle-orm';
 import { catchAsync, AppError } from '../middleware/errorHandler.js';
 import OpenAI from 'openai';

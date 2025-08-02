@@ -170,7 +170,7 @@ const MentorshipPage: React.FC = () => {
     if (!selectedMentor) return;
     
     bookSessionMutation.mutate({
-      mentorId: selectedMentor.mentor.id,
+      mentorId: selectedMentor.id,
       ...bookingForm
     });
   };
