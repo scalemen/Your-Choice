@@ -12,6 +12,7 @@ import * as enhancedGamingSchema from './enhanced-gaming-schema.js';
 import * as preloadedContentSchema from './preloaded-content-schema.js';
 import * as classroomSchema from './classroom-schema.js';
 import * as studentAssistanceSchema from './student-assistance-schema.js';
+import * as professionalFeaturesSchema from './professional-features-schema.js';
 import 'dotenv/config';
 
 // Create the connection
@@ -28,9 +29,9 @@ const client = postgres(connectionString, {
 });
 
 // Create drizzle instance
-export const db = drizzle(client, { 
-  schema: { 
-    ...schema, 
+export const db = drizzle(client, {
+  schema: {
+    ...schema,
     ...personalizationSchema,
     ...enhancedSocialSchema,
     ...enhancedNotesSchema,
@@ -41,8 +42,9 @@ export const db = drizzle(client, {
     ...enhancedGamingSchema,
     ...preloadedContentSchema,
     ...classroomSchema,
-    ...studentAssistanceSchema
-  } 
+    ...studentAssistanceSchema,
+    ...professionalFeaturesSchema
+  }
 });
 
 // Export schema for use in other files
@@ -58,6 +60,7 @@ export * from './enhanced-gaming-schema.js';
 export * from './preloaded-content-schema.js';
 export * from './classroom-schema.js';
 export * from './student-assistance-schema.js';
+export * from './professional-features-schema.js';
 
 // Health check function
 export async function checkDatabaseConnection() {
@@ -66,20 +69,20 @@ export async function checkDatabaseConnection() {
     console.log('✅ Database connection successful');
     return true;
   } catch (error) {
-    console.error('❌ Database connection failed:', error.message);
+    console.error('❌ Database connection failed:', error);
     return false;
   }
 }
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
-  console.log('Closing database connection...');
+  console.log('\n🔄 Closing database connection...');
   await client.end();
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
-  console.log('Closing database connection...');
+  console.log('\n🔄 Closing database connection...');
   await client.end();
   process.exit(0);
 });
