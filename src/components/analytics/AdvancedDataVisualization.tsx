@@ -16,14 +16,14 @@ import {
   ChartOptions as ChartJSOptions
 } from 'chart.js';
 import {
-  Line,
-  Bar,
-  Pie,
-  Doughnut,
-  Radar,
-  PolarArea,
-  Scatter,
-  Bubble
+  Line as ChartJSLine,
+  Bar as ChartJSBar,
+  Pie as ChartJSPie,
+  Doughnut as ChartJSDoughnut,
+  Radar as ChartJSRadar,
+  PolarArea as ChartJSPolarArea,
+  Scatter as ChartJSScatter,
+  Bubble as ChartJSBubble
 } from 'react-chartjs-2';
 import { 
   AreaChart, 
@@ -50,7 +50,8 @@ import {
   FunnelChart,
   Funnel,
   LabelList,
-  Tooltip
+  Tooltip,
+  Line
 } from 'recharts';
 import {
   TrendingUp,
@@ -1080,19 +1081,19 @@ export const AdvancedDataVisualization: React.FC = () => {
     
     switch (widget.chartType) {
       case 'line':
-        return <Line data={widget.data} options={chartOptions} />;
+        return <ChartJSLine data={widget.data} options={chartOptions} />;
       case 'bar':
-        return <Bar data={widget.data} options={chartOptions} />;
+                  return <ChartJSBar data={widget.data} options={chartOptions} />;
       case 'pie':
-        return <Pie data={widget.data} options={chartOptions} />;
+                  return <ChartJSPie data={widget.data} options={chartOptions} />;
       case 'doughnut':
-        return <Doughnut data={widget.data} options={chartOptions} />;
+                  return <ChartJSDoughnut data={widget.data} options={chartOptions} />;
       case 'radar':
-        return <Radar data={widget.data} options={chartOptions} />;
+                  return <ChartJSRadar data={widget.data} options={chartOptions} />;
       case 'scatter':
-        return <Scatter data={widget.data} options={chartOptions} />;
+                  return <ChartJSScatter data={widget.data} options={chartOptions} />;
       case 'bubble':
-        return <Bubble data={widget.data} options={chartOptions} />;
+                  return <ChartJSBubble data={widget.data} options={chartOptions} />;
       case 'area':
         return (
           <ResponsiveContainer width="100%" height="100%">

@@ -20,7 +20,7 @@ import {
   DoughnutController,
   PieController
 } from 'chart.js';
-import { Line, Bar, Pie, Doughnut, Radar, PolarArea, Scatter, Bubble } from 'react-chartjs-2';
+import { Line as ChartJSLine, Bar as ChartJSBar, Pie as ChartJSPie, Doughnut as ChartJSDoughnut, Radar as ChartJSRadar, PolarArea as ChartJSPolarArea, Scatter as ChartJSScatter, Bubble as ChartJSBubble } from 'react-chartjs-2';
 import { format, parseISO, startOfWeek, endOfWeek, eachDayOfInterval, subWeeks, addWeeks } from 'date-fns';
 import { cn } from '@/utils/cn';
 
@@ -412,21 +412,21 @@ export const AdvancedChart: React.FC<AdvancedChartProps> = ({
 
     switch (config.type) {
       case 'line':
-        return <Line {...chartProps} />;
+        return <ChartJSLine {...chartProps} />;
       case 'bar':
-        return <Bar {...chartProps} />;
+        return <ChartJSBar {...chartProps} />;
       case 'pie':
-        return <Pie {...chartProps} />;
+        return <ChartJSPie {...chartProps} />;
       case 'doughnut':
-        return <Doughnut {...chartProps} />;
+        return <ChartJSDoughnut {...chartProps} />;
       case 'radar':
-        return <Radar {...chartProps} />;
+        return <ChartJSRadar {...chartProps} />;
       case 'polarArea':
-        return <PolarArea {...chartProps} />;
+        return <ChartJSPolarArea {...chartProps} />;
       case 'scatter':
-        return <Scatter {...chartProps} />;
+        return <ChartJSScatter {...chartProps} />;
       case 'bubble':
-        return <Bubble {...chartProps} />;
+        return <ChartJSBubble {...chartProps} />;
       case 'heatmap':
         return <HeatmapChart data={data} config={config} />;
       case 'treemap':
@@ -434,7 +434,7 @@ export const AdvancedChart: React.FC<AdvancedChartProps> = ({
       case 'sankey':
         return <SankeyChart data={data} config={config} />;
       default:
-        return <Line {...chartProps} />;
+        return <ChartJSLine {...chartProps} />;
     }
   };
 

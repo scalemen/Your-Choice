@@ -18,7 +18,6 @@ import {
   BoltIcon,
   HeartIcon,
   EyeIcon,
-  BrainIcon,
   SparklesIcon,
   RocketLaunchIcon,
   CalendarDaysIcon,
@@ -49,7 +48,7 @@ import {
   DevicePhoneMobileIcon,
   WifiIcon,
   SignalIcon,
-  BatteryIcon,
+  Battery0Icon,
   CommandLineIcon,
   CpuChipIcon,
   ServerIcon,
@@ -413,7 +412,7 @@ const DashboardPage: React.FC = () => {
           id: '2',
           title: 'Quiz Master',
           description: 'Score 90% or higher on 10 quizzes',
-          icon: BrainIcon,
+          icon: CpuChipIcon,
           category: 'Performance',
           rarity: 'epic',
           progress: 7,
@@ -497,7 +496,7 @@ const DashboardPage: React.FC = () => {
       case 'social':
         return UserGroupIcon;
       case 'system':
-        return CogIcon;
+        return Cog6ToothIcon;
       default:
         return InformationCircleIcon;
     }
@@ -627,7 +626,7 @@ const DashboardPage: React.FC = () => {
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    {getGreeting()}, {user?.name?.split(' ')[0] || 'Student'}! 👋
+                    {getGreeting()}, {user?.fullName?.split(' ')[0] || 'Student'}! 👋
                   </h1>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {formatDate(currentTime)} • {formatTime(currentTime)}

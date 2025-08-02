@@ -29,7 +29,7 @@ import {
   MagnifyingGlassIcon,
   FunnelIcon,
   Bars3Icon,
-  GridViewIcon
+  Squares2X2Icon
 } from '@heroicons/react/24/outline';
 import { 
   PlayIcon as PlayIconSolid,
@@ -138,7 +138,7 @@ const GamesPage: React.FC = () => {
 
   // Mock data
   const gameCategories = [
-    { id: 'all', name: 'All Games', icon: GridViewIcon, count: 150 },
+    { id: 'all', name: 'All Games', icon: Squares2X2Icon, count: 150 },
     { id: 'math', name: 'Mathematics', icon: CalculatorIcon, count: 25 },
     { id: 'science', name: 'Science', icon: BeakerIcon, count: 30 },
     { id: 'language', name: 'Language Arts', icon: LanguageIcon, count: 20 },
@@ -601,7 +601,7 @@ const GamesPage: React.FC = () => {
                           : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                       )}
                     >
-                      <GridViewIcon className="h-5 w-5" />
+                      <Squares2X2Icon className="h-5 w-5" />
                     </button>
                     <button
                       onClick={() => setViewMode('list')}

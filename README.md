@@ -1,446 +1,299 @@
-# StudyGenius - The Ultimate Educational Platform
+# StudyGenius - Comprehensive Educational Platform
 
-🎓 **Revolutionary AI-powered learning platform with comprehensive features for modern education**
+StudyGenius is an all-in-one educational platform featuring advanced AI tutoring, comprehensive learning management, social collaboration, and cutting-edge educational technologies.
 
-[![Frontend Build](https://img.shields.io/badge/Frontend-✅%20Ready-green)](./src)
-[![Backend Build](https://img.shields.io/badge/Backend-✅%20Ready-green)](./server)
-[![Lines of Code](https://img.shields.io/badge/Lines%20of%20Code-26K+-blue)](#)
-[![Features](https://img.shields.io/badge/Features-50+-purple)](#features)
+## 🎯 Key Features
+
+- **Advanced AI Tutoring System** - GPT-4 powered personalized learning
+- **Comprehensive Note-Taking** - Rich text editing with handwriting support
+- **Intelligent Study Planner** - AI-generated adaptive study schedules
+- **Flashcard System** - Spaced repetition with AI-generated content
+- **Social Learning Hub** - Discord-style communication and collaboration
+- **Educational Gaming Platform** - Gamified learning with tournaments
+- **Classroom Management** - Google Classroom-like institutional features
+- **Student Wellness Monitoring** - Mental health and wellness tracking
+- **Peer Tutoring Marketplace** - Connect students with tutors
+- **Advanced Analytics Dashboard** - Comprehensive learning insights
+- **Blockchain Certificates** - NFT-based achievement system
+- **VR/AR Learning Environments** - Immersive educational experiences
+
+## 🏗️ Architecture
+
+### Frontend (React + TypeScript)
+- **Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with custom themes
+- **State Management**: Zustand
+- **Data Fetching**: React Query (TanStack Query)
+- **Routing**: React Router DOM
+- **Animations**: Framer Motion
+- **Charts**: Chart.js + Recharts
+- **Build Tool**: Vite
+
+### Backend (Node.js + Express)
+- **Runtime**: Node.js with Express.js
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: JWT + Passport.js + Google OAuth
+- **Real-time**: Socket.io
+- **AI Integration**: OpenAI GPT-4
+- **File Storage**: Multer + Sharp for image processing
+- **Blockchain**: Web3.js + Ethers.js integration
 
 ## 📊 Project Statistics
 
-- **Total Lines of Code**: 26,000+ (Backend: 24,733 + Frontend: 2,000+)
-- **Backend Features**: 40+ comprehensive APIs
-- **Frontend Components**: 25+ responsive React components
-- **Database Tables**: 30+ with full relationships
-- **AI Integrations**: OpenAI GPT-4 powered features
-- **Real-time Features**: Socket.io for collaboration
-- **Security**: JWT authentication, OAuth, rate limiting
-
-## 🚀 Features Overview
-
-### 🏫 Google Classroom Integration
-- **Full Classroom Management**: Teachers can create classes, manage students
-- **Assignment System**: Create, distribute, and grade assignments
-- **Gradebook**: Comprehensive grading with rubrics and analytics
-- **StudyGenius Integration**: Seamless connection with all platform features
-- **Parent/Guardian Access**: Monitor student progress
-- **Calendar Events**: Schedule classes, exams, and study sessions
-
-### 🧠 AI-Powered Learning
-- **AI Study Buddy**: Personal AI assistant with adaptive personality
-- **OpenAI GPT-4 Integration**: Context-aware conversations and tutoring
-- **Homework Solver**: Upload problems, get step-by-step solutions
-- **Content Generation**: AI-generated flashcards, quizzes, and study plans
-- **Smart Recommendations**: Personalized study suggestions
-- **Learning Analytics**: AI insights into study patterns
-
-### 📚 Advanced Flashcard System
-- **Spaced Repetition**: Anki, SM-2, and FSRS algorithms
-- **Rich Media Support**: Images, audio, and multimedia cards
-- **Collaboration**: Share and edit decks with classmates
-- **Import/Export**: Support for Anki, Quizlet, CSV, and JSON formats
-- **Preloaded Content**: Curated flashcard libraries ready to use
-- **Performance Analytics**: Detailed retention and progress tracking
-
-### ✍️ Intelligent Note-Taking
-- **Rich Text Editor**: Quill.js powered with formatting options
-- **Handwriting Support**: Apple Pencil and stylus integration
-- **Real-time Collaboration**: Google Docs-like collaborative editing
-- **OCR Technology**: Convert handwriting to searchable text
-- **AI Summaries**: Automatic note summarization
-- **Note-to-Flashcard**: Convert notes to study cards with AI
-- **Version Control**: Track changes and restore previous versions
-
-### 📅 Smart Study Planner
-- **AI-Generated Plans**: Personalized study schedules
-- **Calendar Integration**: Google, Outlook, and Apple Calendar sync
-- **Adaptive Scheduling**: Adjusts based on progress and performance
-- **Milestone Tracking**: Break down goals into achievable steps
-- **Pomodoro Integration**: Built-in focus and break timers
-- **Analytics Dashboard**: Study time and efficiency metrics
-
-### 👥 Social Learning Platform
-- **Discord-Style Communication**: Voice and video calls
-- **Study Groups**: Support for up to 10 million members
-- **Friend System**: Add friends with Discord-like usernames
-- **Real-time Messaging**: Chat with reactions and typing indicators
-- **Screen Sharing**: Collaborative study sessions
-- **Presence System**: Online status and activity tracking
-
-### 🎮 Educational Gaming
-- **20+ Game Categories**: Math, Science, Language, and more
-- **Tournament System**: Competitive learning events
-- **Achievement System**: 100+ unlockable achievements
-- **Leaderboards**: Global, weekly, monthly, and class rankings
-- **Multiplayer Support**: Learn together through games
-- **Progress Tracking**: Detailed gaming analytics
-
-### 🧘 Student Wellness & Support
-- **Daily Wellness Checks**: Monitor stress and mental health
-- **Peer Tutoring Marketplace**: Smart tutor matching system
-- **Study Streak Gamification**: Multiple streak types with rewards
-- **Learning Analytics Dashboard**: Comprehensive performance insights
-- **Emergency Academic Support**: Instant help ticket system
-- **AI Wellness Insights**: Proactive mental health monitoring
-
-### 📊 Advanced Analytics
-- **Behavioral Analysis**: Study patterns and learning insights
-- **Predictive Analytics**: Early warning systems for struggling students
-- **Performance Metrics**: Comprehensive academic tracking
-- **Comparative Analysis**: Peer and historical comparisons
-- **Custom Reports**: Detailed progress and achievement reports
-- **Real-time Dashboards**: Live performance monitoring
-
-### 🔒 Enterprise Security
-- **JWT Authentication**: Secure token-based auth system
-- **Google OAuth**: Single sign-on integration
-- **Rate Limiting**: API protection and abuse prevention
-- **Data Encryption**: Secure storage and transmission
-- **Role-Based Access**: Granular permission system
-- **Session Management**: Secure session handling
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **Framework**: React 18 + TypeScript
-- **Build Tool**: Vite for lightning-fast development
-- **Styling**: Tailwind CSS with custom theme system
-- **State Management**: Zustand for global state
-- **API Calls**: React Query + Axios
-- **UI Components**: Headless UI + Custom components
-- **Animations**: Framer Motion
-- **Real-time**: Socket.io Client
-
-### Backend
-- **Runtime**: Node.js with Express.js
-- **Database**: PostgreSQL with Drizzle ORM
-- **Authentication**: JWT + Passport.js
-- **File Upload**: Multer with Sharp for image processing
-- **Real-time**: Socket.io
-- **AI Integration**: OpenAI GPT-4
-- **Email**: Nodemailer
-- **Caching**: Redis (optional)
-
-### Development Tools
-- **Code Quality**: ESLint + Prettier
-- **Type Safety**: TypeScript throughout
-- **Database**: Drizzle Kit for migrations
-- **Development**: Concurrently for full-stack dev
-- **Monitoring**: Built-in health checks
+- **Total Lines of Code**: 76,396
+- **Frontend Files**: 50+ React components and pages
+- **Backend Files**: 25+ API routes and services
+- **Database Tables**: 50+ comprehensive schema definitions
+- **Supported Features**: 100+ educational features
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
 - PostgreSQL 14+
-- Redis (optional)
-- OpenAI API Key (for AI features)
+- npm or yarn
 
 ### Installation
 
-1. **Clone the repository**
-```bash
-git clone <repository-url>
-cd studygenius
-```
+1. **Clone and Setup**
+   ```bash
+   git clone <repository-url>
+   cd studygenius
+   ```
 
-2. **Install dependencies**
-```bash
-# Install frontend dependencies
-npm install
+2. **Install Dependencies**
+   ```bash
+   # Frontend dependencies
+   npm install
 
-# Install backend dependencies
-cd server
-npm install
-```
+   # Backend dependencies
+   cd server
+   npm install
+   cd ..
+   ```
 
-3. **Setup environment variables**
+3. **Environment Configuration**
+   ```bash
+   # Create backend environment file
+   cp server/.env.example server/.env
+   
+   # Configure your environment variables:
+   # - DATABASE_URL (PostgreSQL connection string)
+   # - OPENAI_API_KEY (for AI features)
+   # - JWT_SECRET (for authentication)
+   # - GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET (for OAuth)
+   ```
 
-**Frontend (.env)**
-```env
-VITE_API_URL=http://localhost:5000
-```
+4. **Database Setup**
+   ```bash
+   cd server
+   npm run db:push    # Initialize database schema
+   npm run seed       # Optional: seed with sample data
+   cd ..
+   ```
 
-**Backend (server/.env)**
-```env
-# Database
-DATABASE_URL=postgresql://postgres:password@localhost:5432/studygenius
+5. **Development Mode**
+   ```bash
+   # Terminal 1: Backend server
+   cd server
+   npm run dev
 
-# JWT Secrets
-JWT_SECRET=your-super-secret-jwt-key-here
-JWT_REFRESH_SECRET=your-super-secret-refresh-key-here
+   # Terminal 2: Frontend development server  
+   npm run dev
+   ```
 
-# OpenAI
-OPENAI_API_KEY=your-openai-api-key
+6. **Production Build**
+   ```bash
+   # Build frontend for production
+   npm run build
 
-# Google OAuth
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-
-# Server
-PORT=5000
-NODE_ENV=development
-CLIENT_URL=http://localhost:3000
-```
-
-4. **Setup database**
-```bash
-cd server
-npm run db:push
-```
-
-5. **Seed sample data** (optional)
-```bash
-cd server
-node scripts/seed-preloaded-content.js
-```
-
-6. **Start development servers**
-```bash
-# Terminal 1: Frontend
-npm run dev
-
-# Terminal 2: Backend
-cd server
-npm run dev
-```
-
-7. **Access the application**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-- Database Studio: `npm run db:studio` (in server directory)
+   # Preview production build
+   npm run preview
+   ```
 
 ## 📁 Project Structure
 
 ```
 studygenius/
-├── src/                          # Frontend React application
-│   ├── components/               # Reusable UI components
-│   │   ├── layouts/             # Page layouts (Auth, Dashboard)
-│   │   └── ui/                  # Base UI components
-│   ├── pages/                   # Page components
-│   │   ├── auth/                # Authentication pages
-│   │   ├── classrooms/          # Classroom management
-│   │   ├── flashcards/          # Flashcard system
-│   │   ├── notes/               # Note-taking interface
-│   │   ├── student-assistance/  # Wellness & support features
-│   │   └── ...                  # Other feature pages
-│   ├── services/                # API service layer
-│   ├── store/                   # Global state management
-│   ├── types/                   # TypeScript type definitions
-│   └── utils/                   # Utility functions
-├── server/                      # Backend Node.js application
-│   ├── db/                      # Database schema and connection
-│   │   ├── schema.js            # Main database schema
-│   │   ├── classroom-schema.js  # Classroom tables
-│   │   ├── student-assistance-schema.js # Wellness features
-│   │   └── ...                  # Other feature schemas
-│   ├── routes/                  # API route handlers
-│   │   ├── auth.js              # Authentication routes
-│   │   ├── classrooms.js        # Classroom management API
-│   │   ├── student-assistance.js # Wellness API
-│   │   └── ...                  # Other feature APIs
-│   ├── middleware/              # Express middleware
-│   ├── services/                # Business logic services
-│   └── scripts/                 # Database seeders and utilities
-├── dist/                        # Frontend build output
-└── docs/                        # Documentation
+├── src/                          # Frontend source code
+│   ├── components/              # Reusable React components
+│   │   ├── ui/                 # Basic UI components
+│   │   ├── layouts/            # Layout components
+│   │   ├── analytics/          # Data visualization components
+│   │   ├── collaboration/      # Real-time collaboration
+│   │   └── enterprise/         # Enterprise features
+│   ├── pages/                  # Page components
+│   │   ├── LandingPage.tsx     # Marketing landing page
+│   │   ├── DashboardPage.tsx   # Main user dashboard
+│   │   ├── NotesPage.tsx       # Note-taking interface
+│   │   ├── StudyPlannerPage.tsx # Study planning tools
+│   │   ├── FlashcardsPage.tsx  # Flashcard management
+│   │   ├── AITutorPage.tsx     # AI tutoring interface
+│   │   ├── SocialPage.tsx      # Social features
+│   │   ├── GamesPage.tsx       # Educational games
+│   │   ├── ClassroomsPage.tsx  # Classroom management
+│   │   └── SettingsPage.tsx    # User settings
+│   ├── store/                  # State management (Zustand)
+│   ├── services/               # API service functions
+│   ├── hooks/                  # Custom React hooks
+│   ├── utils/                  # Utility functions
+│   └── types/                  # TypeScript type definitions
+├── server/                      # Backend source code
+│   ├── routes/                 # Express.js API routes
+│   ├── db/                     # Database schemas and migrations
+│   ├── services/               # Business logic services
+│   ├── middleware/             # Express middleware
+│   ├── scripts/                # Database seeders and utilities
+│   └── index.js               # Server entry point
+├── dist/                       # Production build output
+├── public/                     # Static assets
+└── docs/                       # Documentation
+
 ```
 
-## 🔧 Development Commands
+## 🔧 Development Tools
 
-### Frontend Commands
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-npm run type-check   # Run TypeScript checks
-```
+### Frontend
+- **TypeScript**: Type safety and better IDE support
+- **ESLint**: Code linting and formatting
+- **Prettier**: Code formatting
+- **Tailwind CSS**: Utility-first CSS framework
+- **Vite**: Fast build tool and development server
 
-### Backend Commands
-```bash
-npm run dev          # Start development server with nodemon
-npm start            # Start production server
-npm run db:generate  # Generate database migrations
-npm run db:push      # Push schema to database
-npm run db:studio    # Open Drizzle Studio
-```
+### Backend
+- **Nodemon**: Auto-restart during development
+- **Drizzle Kit**: Database schema management
+- **ESLint**: Node.js code linting
 
-## 🌐 API Endpoints
+## 🌟 Key Technologies
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `GET /api/auth/google` - Google OAuth login
-- `POST /api/auth/refresh` - Refresh JWT token
-- `GET /api/auth/me` - Get current user
+### AI & Machine Learning
+- OpenAI GPT-4 for conversational AI
+- TensorFlow.js for browser-based ML
+- Computer vision for handwriting recognition
+- Natural language processing for content analysis
 
-### Classrooms
-- `GET /api/classrooms` - List user's classrooms
-- `POST /api/classrooms` - Create new classroom
-- `GET /api/classrooms/:id` - Get classroom details
-- `POST /api/classrooms/:id/assignments` - Create assignment
-- `GET /api/assignments/:id/study-suggestions` - AI study suggestions
+### Real-time Features
+- WebSocket connections for live collaboration
+- WebRTC for video/audio calls
+- Operational Transformation for document editing
+- Live presence indicators and typing awareness
 
-### Student Assistance
-- `GET /api/student-assistance/study-buddy` - Get AI study buddy
-- `POST /api/student-assistance/wellness/daily-check` - Submit wellness check
-- `GET /api/student-assistance/learning-analytics` - Get learning insights
-- `GET /api/student-assistance/recommendations` - Get study recommendations
+### Data & Analytics
+- Advanced learning analytics
+- Performance tracking and insights
+- Predictive modeling for learning outcomes
+- Custom data visualization dashboards
 
-### Content Management
-- `GET /api/content-management/categories` - Browse content categories
-- `GET /api/content-management/flashcard-collections` - Preloaded collections
-- `POST /api/content-management/import` - Import study materials
-- `POST /api/content-management/export` - Export user content
+### Security & Authentication
+- JWT-based authentication
+- Multi-factor authentication (TOTP, SMS)
+- OAuth integration (Google, Microsoft)
+- Role-based access control
+- Device trust and session management
 
-### [View complete API documentation](./docs/api.md)
+## 🔒 Security Features
+
+- HTTPS enforcement
+- Content Security Policy (CSP) headers
+- Rate limiting and DDoS protection
+- Input validation and sanitization
+- SQL injection prevention
+- XSS protection
+- Encrypted data storage
+
+## 📱 Mobile Support
+
+- Responsive design for all screen sizes
+- Progressive Web App (PWA) capabilities
+- Touch-optimized interactions
+- Offline functionality for core features
+
+## 🌐 Browser Compatibility
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## 📈 Performance
+
+- Code splitting and lazy loading
+- Optimized bundle sizes
+- CDN integration for static assets
+- Database query optimization
+- Caching strategies (Redis integration ready)
 
 ## 🧪 Testing
 
-### Running Tests
 ```bash
-# Frontend tests
+# Run frontend tests
 npm run test
 
-# Backend tests
+# Run backend tests
 cd server
 npm run test
 
-# E2E tests
+# Run end-to-end tests
 npm run test:e2e
 ```
 
-### Test Coverage
-- Unit tests for all utility functions
-- Integration tests for API endpoints
-- Component tests for React components
-- End-to-end tests for critical user journeys
-
 ## 🚀 Deployment
 
-### Production Build
+### Docker Deployment
 ```bash
-# Build frontend
-npm run build
-
-# The build output will be in `dist/` directory
-# Serve with any static file server or CDN
-```
-
-### Environment Variables for Production
-```env
-# Frontend
-VITE_API_URL=https://api.studygenius.com
-
-# Backend
-DATABASE_URL=postgresql://user:pass@host:5432/db
-NODE_ENV=production
-JWT_SECRET=your-production-jwt-secret
-OPENAI_API_KEY=your-openai-key
-```
-
-### Docker Support
-```bash
-# Build and run with Docker
+# Build and run with Docker Compose
 docker-compose up --build
-
-# Production deployment
-docker-compose -f docker-compose.prod.yml up -d
 ```
+
+### Manual Deployment
+1. Build frontend: `npm run build`
+2. Set up PostgreSQL database
+3. Configure environment variables
+4. Deploy backend to cloud service (AWS, Azure, GCP)
+5. Deploy frontend to CDN (Vercel, Netlify, CloudFront)
+
+## 📖 API Documentation
+
+API documentation is available at `/api/docs` when running the development server.
+
+### Key Endpoints
+- `POST /api/auth/login` - User authentication
+- `GET /api/users/profile` - User profile data
+- `POST /api/notes` - Create new note
+- `GET /api/flashcards` - Get user's flashcards
+- `POST /api/ai/chat` - AI tutor conversations
+- `GET /api/analytics/dashboard` - Learning analytics
 
 ## 🤝 Contributing
 
-### Development Workflow
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and add tests
-4. Run the test suite: `npm test`
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request
-
-### Code Style
-- ESLint + Prettier for consistent formatting
-- TypeScript for type safety
-- Conventional commits for clear history
-- Component-driven development
-- Test-driven development encouraged
-
-## 📚 Documentation
-
-- [API Documentation](./docs/api.md)
-- [Frontend Architecture](./docs/frontend.md)
-- [Backend Architecture](./docs/backend.md)
-- [Database Schema](./docs/database.md)
-- [Deployment Guide](./docs/deployment.md)
-
-## 🔐 Security
-
-StudyGenius implements enterprise-grade security:
-
-- **Authentication**: JWT with refresh tokens
-- **Authorization**: Role-based access control
-- **Data Protection**: Encryption at rest and in transit
-- **API Security**: Rate limiting and input validation
-- **OWASP Compliance**: Following security best practices
-- **Privacy**: GDPR/CCPA compliant data handling
-
-## 🎯 Roadmap
-
-### Phase 1: Core Platform ✅
-- [x] Authentication system
-- [x] Basic flashcard functionality
-- [x] Note-taking system
-- [x] Google Classroom integration
-
-### Phase 2: AI Enhancement ✅
-- [x] AI Study Buddy
-- [x] Content generation
-- [x] Smart recommendations
-- [x] Learning analytics
-
-### Phase 3: Social Features ✅
-- [x] Study groups
-- [x] Real-time collaboration
-- [x] Peer tutoring marketplace
-- [x] Wellness monitoring
-
-### Phase 4: Advanced Features ✅
-- [x] Educational gaming
-- [x] Advanced analytics
-- [x] Content import/export
-- [x] Mobile optimization
-
-### Phase 5: Enterprise (Planned)
-- [ ] LMS integration (Canvas, Blackboard)
-- [ ] Advanced reporting for institutions
-- [ ] White-label solutions
-- [ ] Enterprise SSO
-- [ ] Advanced analytics for administrators
+3. Commit changes: `git commit -m 'Add amazing feature'`
+4. Push to branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- OpenAI for GPT-4 integration
-- The React and Node.js communities
-- All the open-source contributors who made this possible
-- Educational institutions providing feedback and requirements
+For support and questions:
+- Create an issue in the repository
+- Check the documentation in the `/docs` folder
+- Review the API documentation
 
-## 📞 Support
+## 🎯 Roadmap
 
-- **Email**: support@studygenius.com
-- **Discord**: [StudyGenius Community](https://discord.gg/studygenius)
-- **Documentation**: [docs.studygenius.com](https://docs.studygenius.com)
-- **Issues**: [GitHub Issues](https://github.com/studygenius/issues)
+- [ ] Mobile app development (React Native)
+- [ ] Advanced VR/AR integration
+- [ ] Blockchain-based certificates
+- [ ] Advanced AI tutoring personalities
+- [ ] Global collaboration features
+- [ ] Enterprise SSO integration
+- [ ] Advanced analytics and reporting
 
 ---
 
-**StudyGenius** - Transforming education through technology 🚀
-
-Built with ❤️ by the StudyGenius team
+**StudyGenius** - Empowering education through technology 🎓✨
