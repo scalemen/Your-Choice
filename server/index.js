@@ -36,6 +36,10 @@ import socialRoutes from './routes/social.js';
 import enhancedSocialRoutes from './routes/enhanced-social.js';
 import enhancedNotesRoutes from './routes/enhanced-notes.js';
 import enhancedAiRoutes from './routes/enhanced-ai.js';
+import enhancedStudyPlannerRoutes from './routes/enhanced-study-planner.js';
+import enhancedQuizRoutes from './routes/enhanced-quiz.js';
+import enhancedFlashcardsRoutes from './routes/enhanced-flashcards.js';
+import enhancedGamingRoutes from './routes/enhanced-gaming.js';
 
 // Import middleware
 import { authenticateUser } from './middleware/auth.js';
@@ -150,6 +154,10 @@ app.use('/api/social', authenticateUser, socialRoutes);
 app.use('/api/enhanced-social', authenticateUser, enhancedSocialRoutes);
 app.use('/api/enhanced-notes', authenticateUser, enhancedNotesRoutes);
 app.use('/api/enhanced-ai', authenticateUser, enhancedAiRoutes);
+app.use('/api/enhanced-study-planner', authenticateUser, enhancedStudyPlannerRoutes);
+app.use('/api/enhanced-quiz', authenticateUser, enhancedQuizRoutes);
+app.use('/api/enhanced-flashcards', authenticateUser, enhancedFlashcardsRoutes);
+app.use('/api/enhanced-gaming', authenticateUser, enhancedGamingRoutes);
 
 // File upload endpoint
 app.post('/api/upload', authenticateUser, uploadHandler, (req, res) => {
