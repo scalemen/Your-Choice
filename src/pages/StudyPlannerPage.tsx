@@ -66,7 +66,7 @@ import {
   FireIcon as FireSolidIcon,
   TrophyIcon as TrophySolidIcon
 } from '@heroicons/react/24/solid';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { cn } from '../utils/cn';
 
 // Types

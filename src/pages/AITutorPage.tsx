@@ -117,7 +117,7 @@ import {
   BugAntIcon,
   WifiIcon,
   SignalIcon,
-  BatteryIcon,
+  Battery0Icon,
   PowerIcon,
   PlayIcon,
   PauseIcon,
@@ -215,7 +215,7 @@ import {
   PhotoIcon as PhotoSolidIcon,
   DocumentTextIcon as DocumentSolidIcon
 } from '@heroicons/react/24/solid';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { cn } from '../utils/cn';
 
 // Types

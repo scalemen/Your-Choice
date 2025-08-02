@@ -56,7 +56,8 @@ import {
   CurrencyDollarIcon,
   ScaleIcon,
   QrCodeIcon,
-  CommandLineIcon
+  CommandLineIcon,
+  PencilIcon
 } from '@heroicons/react/24/outline';
 
 const LandingPage: React.FC = () => {

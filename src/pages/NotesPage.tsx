@@ -69,7 +69,7 @@ import {
   HeartIcon as HeartSolidIcon,
   FireIcon as FireSolidIcon
 } from '@heroicons/react/24/solid';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { cn } from '../utils/cn';
 
 // Types

@@ -12,7 +12,7 @@ import {
   Mic, 
   MicOff,
   VideoOff,
-  Screen,
+  Monitor,
   Hand,
   Heart,
   ThumbsUp,
@@ -26,7 +26,6 @@ import {
   VolumeX,
   Phone,
   PhoneOff,
-  Monitor,
   Maximize,
   Minimize,
   RotateCcw,
@@ -325,9 +324,9 @@ class OperationalTransform {
       // Insert is within the delete range
       return [
         { ...op1, position: op2.position },
-        { ...op2, content: op2.content?.slice(0, op1.position - op2.position) + 
-                           op1.content + 
-                           op2.content?.slice(op1.position - op2.position) }
+        { ...op2, content: (op2.content?.slice(0, op1.position - op2.position) || '') + 
+                           (op1.content || '') + 
+                           (op2.content?.slice(op1.position - op2.position) || '') }
       ];
     }
   }
@@ -356,14 +355,14 @@ class OperationalTransform {
         {
           ...op1,
           position: Math.min(op1.position, op2.position),
-          content: op1.content?.slice(0, overlapStart - op1.position) +
-                  op1.content?.slice(overlapEnd - op1.position)
+          content: (op1.content?.slice(0, overlapStart - op1.position) || '') +
+                  (op1.content?.slice(overlapEnd - op1.position) || '')
         },
         {
           ...op2,
           position: Math.min(op1.position, op2.position),
-          content: op2.content?.slice(0, overlapStart - op2.position) +
-                  op2.content?.slice(overlapEnd - op2.position)
+          content: (op2.content?.slice(0, overlapStart - op2.position) || '') +
+                  (op2.content?.slice(overlapEnd - op2.position) || '')
         }
       ];
     }

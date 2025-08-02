@@ -10,9 +10,10 @@ import {
   ArcElement,
   RadialLinearScale,
   Filler,
-  Tooltip,
+  Tooltip as ChartTooltip,
   Legend,
-  TimeScale
+  TimeScale,
+  ChartOptions as ChartJSOptions
 } from 'chart.js';
 import {
   Line,
@@ -48,7 +49,8 @@ import {
   Brush,
   FunnelChart,
   Funnel,
-  LabelList
+  LabelList,
+  Tooltip
 } from 'recharts';
 import {
   TrendingUp,
@@ -138,7 +140,7 @@ ChartJS.register(
   ArcElement,
   RadialLinearScale,
   Filler,
-  Tooltip,
+  ChartTooltip,
   Legend,
   TimeScale
 );
@@ -888,7 +890,7 @@ export const AdvancedDataVisualization: React.FC = () => {
   };
 
   // Widget Management
-  const addWidget = (type: DashboardWidget['type'], chartType?: string) => {
+  const addWidget = (type: DashboardWidget['type'], chartType?: DashboardWidget['chartType']) => {
     const newWidget: DashboardWidget = {
       id: `widget-${Date.now()}`,
       title: `New ${type}`,
@@ -1034,7 +1036,7 @@ export const AdvancedDataVisualization: React.FC = () => {
       );
     }
     
-    const chartOptions: ChartOptions = {
+    const chartOptions: any = {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
@@ -1067,7 +1069,7 @@ export const AdvancedDataVisualization: React.FC = () => {
         }
       },
       interaction: {
-        mode: 'nearest',
+        mode: 'nearest' as const,
         intersect: false
       },
       animation: {

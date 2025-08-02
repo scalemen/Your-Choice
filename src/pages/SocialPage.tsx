@@ -54,7 +54,7 @@ import {
   StarIcon as StarIconSolid,
   FireIcon as FireIconSolid
 } from '@heroicons/react/24/solid';
-import { LoadingSpinner } from '../components/ui/LoadingSpinner';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { cn } from '../utils/cn';
 
 const SocialPage: React.FC = () => {
