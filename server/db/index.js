@@ -3,6 +3,8 @@ import postgres from 'postgres';
 import * as schema from './schema.js';
 import * as personalizationSchema from './personalization-schema.js';
 import * as enhancedSocialSchema from './enhanced-social-schema.js';
+import * as enhancedNotesSchema from './enhanced-notes-schema.js';
+import * as enhancedAiSchema from './enhanced-ai-schema.js';
 import 'dotenv/config';
 
 // Create the connection
@@ -23,7 +25,9 @@ export const db = drizzle(client, {
   schema: { 
     ...schema, 
     ...personalizationSchema,
-    ...enhancedSocialSchema
+    ...enhancedSocialSchema,
+    ...enhancedNotesSchema,
+    ...enhancedAiSchema
   } 
 });
 
@@ -31,6 +35,8 @@ export const db = drizzle(client, {
 export * from './schema.js';
 export * from './personalization-schema.js';
 export * from './enhanced-social-schema.js';
+export * from './enhanced-notes-schema.js';
+export * from './enhanced-ai-schema.js';
 
 // Health check function
 export async function checkDatabaseConnection() {
