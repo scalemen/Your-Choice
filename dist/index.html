@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>StudyGenius - The Ultimate Educational Platform</title>
+    <meta name="title" content="StudyGenius - The Ultimate Educational Platform" />
+    <meta name="description" content="Revolutionary AI-powered learning platform with flashcards, note-taking, study planning, and collaborative features. Transform your education with StudyGenius." />
+    <meta name="keywords" content="education, learning, AI, flashcards, notes, study planner, collaboration, students, teachers" />
+    <meta name="author" content="StudyGenius Team" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://studygenius.app/" />
+    <meta property="og:title" content="StudyGenius - The Ultimate Educational Platform" />
+    <meta property="og:description" content="Revolutionary AI-powered learning platform with flashcards, note-taking, study planning, and collaborative features." />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://studygenius.app/" />
+    <meta property="twitter:title" content="StudyGenius - The Ultimate Educational Platform" />
+    <meta property="twitter:description" content="Revolutionary AI-powered learning platform with flashcards, note-taking, study planning, and collaborative features." />
+    <meta property="twitter:image" content="/og-image.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" 
+      rel="stylesheet" 
+    />
+    
+    <!-- Styles -->
+    <style>
+      /* Loading screen styles */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      .loading-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        font-weight: 800;
+        color: #667eea;
+        margin-bottom: 24px;
+        animation: pulse 2s infinite;
+      }
+      
+      .loading-text {
+        color: white;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      
+      .loading-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+        font-weight: 400;
+      }
+      
+      .loading-spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-top: 24px;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Prevent flash of unstyled content */
+      body {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      
+      #root {
+        height: 100vh;
+        overflow: hidden;
+      }
+      
+      /* Dark mode system preference */
+      @media (prefers-color-scheme: dark) {
+        html {
+          color-scheme: dark;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-D7VKuRA1.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-CWSDbGja.js">
+    <link rel="modulepreload" crossorigin href="/assets/utils-DNjMRfKp.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-tx30jOk-.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BVWF6Z2L.css">
+  </head>
+  <body class="h-full bg-gray-50 dark:bg-gray-900">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-logo">SG</div>
+      <div class="loading-text">StudyGenius</div>
+      <div class="loading-subtitle">The Ultimate Educational Platform</div>
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- React App Root -->
+    <div id="root"></div>
+    
+    <!-- Loading Script -->
+    <script>
+      // Remove loading screen once the app loads
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+              document.body.style.overflow = 'auto';
+            }, 500);
+          }
+        }, 1000);
+      });
+      
+      // Error handling for React
+      window.addEventListener('error', (event) => {
+        console.error('Global error:', event.error);
+      });
+      
+      window.addEventListener('unhandledrejection', (event) => {
+        console.error('Unhandled promise rejection:', event.reason);
+      });
+    </script>
+    
+    <!-- React App -->
+  </body>
+</html>

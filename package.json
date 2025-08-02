@@ -57,7 +57,10 @@
     "react-spring": "^9.7.3",
     "lottie-react": "^2.4.0",
     "react-confetti": "^6.1.0",
-    "react-helmet-async": "^2.0.4"
+    "react-helmet-async": "^2.0.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",

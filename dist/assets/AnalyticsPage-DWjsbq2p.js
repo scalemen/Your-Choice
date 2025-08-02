@@ -1,0 +1,2 @@
+import{j as t}from"./index-D7VKuRA1.js";import"./vendor-CWSDbGja.js";import"./utils-DNjMRfKp.js";import"./ui-tx30jOk-.js";const i=()=>t.jsxs("div",{className:"text-center",children:[t.jsx("h1",{className:"text-2xl font-bold text-gray-900 dark:text-white mb-4",children:"AnalyticsPage"}),t.jsx("p",{className:"text-gray-600 dark:text-gray-300",children:"Coming soon..."})]});export{i as default};
+//# sourceMappingURL=AnalyticsPage-DWjsbq2p.js.map
