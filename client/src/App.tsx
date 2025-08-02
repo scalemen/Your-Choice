@@ -40,6 +40,9 @@ const VideoCall = lazy(() => import('@/pages/communication/VideoCall'));
 const Workspaces = lazy(() => import('@/pages/workspaces/Workspaces'));
 const WorkspaceDetail = lazy(() => import('@/pages/workspaces/WorkspaceDetail'));
 const Analytics = lazy(() => import('@/pages/analytics/Analytics'));
+const Leaderboards = lazy(() => import('@/pages/Leaderboards'));
+const Personalization = lazy(() => import('@/components/Personalization'));
+const Social = lazy(() => import('@/pages/Social'));
 const Profile = lazy(() => import('@/pages/profile/Profile'));
 const Settings = lazy(() => import('@/pages/settings/Settings'));
 const Help = lazy(() => import('@/pages/help/Help'));
@@ -437,6 +440,42 @@ const App: React.FC = () => {
                       <ProtectedRoute>
                         <Layout>
                           <Analytics />
+                        </Layout>
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Leaderboards */}
+                  <Route
+                    path="/leaderboards"
+                    element={
+                      <ProtectedRoute>
+                        <Layout>
+                          <Leaderboards />
+                        </Layout>
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Personalization */}
+                  <Route
+                    path="/personalization"
+                    element={
+                      <ProtectedRoute>
+                        <Layout>
+                          <Personalization />
+                        </Layout>
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Social */}
+                  <Route
+                    path="/social"
+                    element={
+                      <ProtectedRoute>
+                        <Layout>
+                          <Social />
                         </Layout>
                       </ProtectedRoute>
                     }
