@@ -69,7 +69,7 @@ export async function checkDatabaseConnection() {
     console.log('✅ Database connection successful');
     return true;
   } catch (error) {
-    console.error('❌ Database connection failed:', error);
+    console.error('❌ Database connection failed:', error.message);
     return false;
   }
 }
@@ -77,12 +77,22 @@ export async function checkDatabaseConnection() {
 // Graceful shutdown
 process.on('SIGINT', async () => {
   console.log('\n🔄 Closing database connection...');
-  await client.end();
+  try {
+    await client.end();
+  } catch (error) {
+    // Ignore connection errors during shutdown
+  }
+  console.log('👋 Goodbye!');
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
   console.log('\n🔄 Closing database connection...');
-  await client.end();
+  try {
+    await client.end();
+  } catch (error) {
+    // Ignore connection errors during shutdown
+  }
+  console.log('👋 Goodbye!');
   process.exit(0);
 });

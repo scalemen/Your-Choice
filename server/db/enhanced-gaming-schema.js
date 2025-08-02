@@ -539,7 +539,7 @@ export const gameAnalytics = pgTable('game_analytics', {
 }));
 
 // Define relationships
-export const educationalGamesRelations = relations(educationalGames, ({ many }) => ({
+export const educationalGamesRelations = relations(educationalGames, ({ one, many }) => ({
   sessions: many(gameSessions),
   tournaments: many(gameTournaments),
   leaderboards: many(gameLeaderboards),

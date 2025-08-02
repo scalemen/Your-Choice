@@ -3,7 +3,7 @@ import { relations } from 'drizzle-orm';
 import { users } from './schema.js';
 
 // Advanced Flashcard Decks with ML and AI
-export const flashcardDecks = pgTable('flashcard_decks', {
+export const enhancedFlashcardDecks = pgTable('enhanced_flashcard_decks', {
   id: serial('id').primaryKey(),
   deckId: uuid('deck_id').defaultRandom().notNull().unique(),
   
@@ -94,11 +94,11 @@ export const flashcardDecks = pgTable('flashcard_decks', {
 }));
 
 // Enhanced Flashcards with Rich Media
-export const flashcards = pgTable('flashcards', {
+export const enhancedFlashcards = pgTable('enhanced_flashcards', {
   id: serial('id').primaryKey(),
   cardId: uuid('card_id').defaultRandom().notNull().unique(),
   
-  deckId: integer('deck_id').references(() => flashcardDecks.id).notNull(),
+  deckId: integer('deck_id').references(() => enhancedFlashcardDecks.id).notNull(),
   
   // Card content
   front: text('front').notNull(),
@@ -193,7 +193,7 @@ export const flashcardStudySessions = pgTable('flashcard_study_sessions', {
   sessionId: uuid('session_id').defaultRandom().notNull().unique(),
   
   userId: integer('user_id').references(() => users.id).notNull(),
-  deckId: integer('deck_id').references(() => flashcardDecks.id).notNull(),
+  deckId: integer('deck_id').references(() => enhancedFlashcardDecks.id).notNull(),
   
   // Session metadata
   sessionType: varchar('session_type', { length: 50 }).default('review'), // review, learn, cram, test
@@ -264,7 +264,7 @@ export const cardReviews = pgTable('card_reviews', {
   reviewId: uuid('review_id').defaultRandom().notNull().unique(),
   
   sessionId: integer('session_id').references(() => flashcardStudySessions.id).notNull(),
-  cardId: integer('card_id').references(() => flashcards.id).notNull(),
+  cardId: integer('card_id').references(() => enhancedFlashcards.id).notNull(),
   userId: integer('user_id').references(() => users.id).notNull(),
   
   // Review metadata
@@ -327,7 +327,7 @@ export const aiFlashcardGeneration = pgTable('ai_flashcard_generation', {
   
   // Generation request
   requestedBy: integer('requested_by').references(() => users.id).notNull(),
-  deckId: integer('deck_id').references(() => flashcardDecks.id),
+  deckId: integer('deck_id').references(() => enhancedFlashcardDecks.id),
   
   // Source material
   sourceType: varchar('source_type', { length: 50 }).notNull(), // text, pdf, url, image, audio, notes
@@ -454,7 +454,7 @@ export const flashcardCollaborations = pgTable('flashcard_collaborations', {
   id: serial('id').primaryKey(),
   collaborationId: uuid('collaboration_id').defaultRandom().notNull().unique(),
   
-  deckId: integer('deck_id').references(() => flashcardDecks.id).notNull(),
+  deckId: integer('deck_id').references(() => enhancedFlashcardDecks.id).notNull(),
   
   // Collaboration details
   collaborationType: varchar('collaboration_type', { length: 50 }).notNull(), // study_group, class, competition, community
@@ -504,21 +504,21 @@ export const flashcardCollaborations = pgTable('flashcard_collaborations', {
 }));
 
 // Define relationships
-export const flashcardDecksRelations = relations(flashcardDecks, ({ one, many }) => ({
+export const enhancedFlashcardDecksRelations = relations(enhancedFlashcardDecks, ({ one, many }) => ({
   createdBy: one(users, {
-    fields: [flashcardDecks.createdBy],
+    fields: [enhancedFlashcardDecks.createdBy],
     references: [users.id]
   }),
-  cards: many(flashcards),
+  cards: many(enhancedFlashcards),
   studySessions: many(flashcardStudySessions),
   aiGenerations: many(aiFlashcardGeneration),
   collaborations: many(flashcardCollaborations)
 }));
 
-export const flashcardsRelations = relations(flashcards, ({ one, many }) => ({
-  deck: one(flashcardDecks, {
-    fields: [flashcards.deckId],
-    references: [flashcardDecks.id]
+export const enhancedFlashcardsRelations = relations(enhancedFlashcards, ({ one, many }) => ({
+  deck: one(enhancedFlashcardDecks, {
+    fields: [enhancedFlashcards.deckId],
+    references: [enhancedFlashcardDecks.id]
   }),
   reviews: many(cardReviews)
 }));
@@ -528,9 +528,9 @@ export const flashcardStudySessionsRelations = relations(flashcardStudySessions,
     fields: [flashcardStudySessions.userId],
     references: [users.id]
   }),
-  deck: one(flashcardDecks, {
+  deck: one(enhancedFlashcardDecks, {
     fields: [flashcardStudySessions.deckId],
-    references: [flashcardDecks.id]
+    references: [enhancedFlashcardDecks.id]
   }),
   reviews: many(cardReviews)
 }));
@@ -540,9 +540,9 @@ export const cardReviewsRelations = relations(cardReviews, ({ one }) => ({
     fields: [cardReviews.sessionId],
     references: [flashcardStudySessions.id]
   }),
-  card: one(flashcards, {
+  card: one(enhancedFlashcards, {
     fields: [cardReviews.cardId],
-    references: [flashcards.id]
+    references: [enhancedFlashcards.id]
   }),
   user: one(users, {
     fields: [cardReviews.userId],
@@ -555,9 +555,9 @@ export const aiFlashcardGenerationRelations = relations(aiFlashcardGeneration, (
     fields: [aiFlashcardGeneration.requestedBy],
     references: [users.id]
   }),
-  deck: one(flashcardDecks, {
+  deck: one(enhancedFlashcardDecks, {
     fields: [aiFlashcardGeneration.deckId],
-    references: [flashcardDecks.id]
+    references: [enhancedFlashcardDecks.id]
   }),
   reviewedBy: one(users, {
     fields: [aiFlashcardGeneration.reviewedBy],
@@ -573,9 +573,9 @@ export const spacedRepetitionAnalyticsRelations = relations(spacedRepetitionAnal
 }));
 
 export const flashcardCollaborationsRelations = relations(flashcardCollaborations, ({ one }) => ({
-  deck: one(flashcardDecks, {
+  deck: one(enhancedFlashcardDecks, {
     fields: [flashcardCollaborations.deckId],
-    references: [flashcardDecks.id]
+    references: [enhancedFlashcardDecks.id]
   }),
   createdBy: one(users, {
     fields: [flashcardCollaborations.createdBy],

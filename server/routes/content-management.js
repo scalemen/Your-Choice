@@ -1,15 +1,8 @@
 import express from 'express';
-import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like, ilike } from 'drizzle-orm';
 import { db } from '../db/index.js';
-import {
-  contentCategories,
-  preloadedFlashcardCollections,
-  preloadedFlashcards,
-  userContentLibrary,
-  contentTransferHistory,
-  noteToFlashcardJobs,
-  contentRecommendations
-} from '../db/preloaded-content-schema.js';
+import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like, ilike } from 'drizzle-orm';
+// Tables accessed via db.schema
+// Tables accessed via db.schema
 // Tables will be accessed through db.schema
 import { authenticateUser } from '../middleware/auth.js';
 import { uploadHandler } from '../middleware/upload.js';

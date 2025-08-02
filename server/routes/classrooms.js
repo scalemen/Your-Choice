@@ -1,27 +1,9 @@
 import express from 'express';
-import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like, ilike, isNull } from 'drizzle-orm';
 import { db } from '../db/index.js';
-import {
-  institutions,
-  classrooms,
-  classroomMemberships,
-  assignments,
-  submissions,
-  classroomPosts,
-  classroomEvents,
-  gradeCategories,
-  grades,
-  classroomStudyIntegration,
-  parentAccess
-} from '../db/classroom-schema.js';
-import {
-  flashcardDecks,
-  flashcards,
-  enhancedNotes,
-  preloadedFlashcardCollections,
-  studyPlans,
-  enhancedQuizzes
-} from '../db/index.js';
+import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like, ilike, isNull } from 'drizzle-orm';
+// Tables accessed via db.schema
+// Tables accessed via db.schema
+// Tables accessed via db.schema
 import { authenticateUser } from '../middleware/auth.js';
 import { uploadHandler } from '../middleware/upload.js';
 import OpenAI from 'openai';

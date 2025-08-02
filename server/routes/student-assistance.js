@@ -1,16 +1,8 @@
 import express from 'express';
-import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like, ilike, between } from 'drizzle-orm';
 import { db } from '../db/index.js';
-import {
-  aiStudyBuddy,
-  studyBuddyConversations,
-  studentWellness,
-  peerTutoring,
-  studyStreaks,
-  learningAnalytics,
-  academicSupportTickets,
-  studyRecommendations
-} from '../db/student-assistance-schema.js';
+import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like, ilike, between } from 'drizzle-orm';
+// Tables accessed via db.schema
+// Tables accessed via db.schema
 import { authenticateUser } from '../middleware/auth.js';
 import OpenAI from 'openai';
 
@@ -493,11 +485,11 @@ router.get('/learning-analytics', async (req, res) => {
       .from(learningAnalytics)
       .where(
         and(
-          eq(learningAnalytics.userId, req.user.id),
-          eq(learningAnalytics.periodType, period)
+          eq(studentLearningAnalytics.userId, req.user.id),
+          eq(studentLearningAnalytics.periodType, period)
         )
       )
-      .orderBy(desc(learningAnalytics.periodStart))
+      .orderBy(desc(studentLearningAnalytics.periodStart))
       .limit(1);
 
     // If no recent analytics, generate them

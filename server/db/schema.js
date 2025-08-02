@@ -522,7 +522,7 @@ export const foldersRelations = relations(folders, ({ one, many }) => ({
     references: [users.id]
   }),
   parent: one(folders, {
-    fields: [folders.parentId],
+    fields: [folders.parentFolderId],
     references: [folders.id]
   }),
   children: many(folders),

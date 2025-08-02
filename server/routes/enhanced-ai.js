@@ -1,17 +1,7 @@
 import express from 'express';
 import { body, validationResult, param, query } from 'express-validator';
-import { 
-  db, 
-  users,
-  aiModels,
-  aiConversations,
-  aiMessages,
-  homeworkProblems,
-  homeworkSubmissions,
-  aiTutoringSessions,
-  aiKnowledgeBase,
-  learningAnalytics
-} from '../db/index.js';
+// Tables accessed via db.schema
+import { db } from '../db/index.js';
 import { eq, and, or, desc, asc, sql, inArray, like, gte, lte, ne, count, exists } from 'drizzle-orm';
 import { catchAsync, AppError } from '../middleware/errorHandler.js';
 import OpenAI from 'openai';

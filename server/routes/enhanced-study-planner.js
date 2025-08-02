@@ -1,15 +1,8 @@
 import express from 'express';
-import { eq, desc, asc, count, and, or, gte, lte, inArray, sql } from 'drizzle-orm';
 import { db } from '../db/index.js';
-import {
-  studyPlans,
-  studyMilestones,
-  studySessions,
-  studyCalendar,
-  studyPlanTemplates,
-  studyAnalytics,
-  adaptiveLearningRecommendations
-} from '../db/enhanced-study-planner-schema.js';
+import { eq, desc, asc, count, and, or, gte, lte, inArray, sql } from 'drizzle-orm';
+// Tables accessed via db.schema
+// Tables accessed via db.schema
 import { authenticateUser } from '../middleware/auth.js';
 import OpenAI from 'openai';
 
@@ -38,41 +31,41 @@ router.get('/plans', async (req, res) => {
     const offset = (page - 1) * limit;
 
     let query = db.select({
-      id: studyPlans.id,
-      planId: studyPlans.planId,
-      title: studyPlans.title,
-      description: studyPlans.description,
-      planType: studyPlans.planType,
-      subject: studyPlans.subject,
-      course: studyPlans.course,
-      primaryGoal: studyPlans.primaryGoal,
-      targetDate: studyPlans.targetDate,
-      startDate: studyPlans.startDate,
-      endDate: studyPlans.endDate,
-      completionPercentage: studyPlans.completionPercentage,
-      totalStudiedHours: studyPlans.totalStudiedHours,
-      totalPlannedHours: studyPlans.totalPlannedHours,
-      currentMilestone: studyPlans.currentMilestone,
-      averageSessionRating: studyPlans.averageSessionRating,
-      adherenceScore: studyPlans.adherenceScore,
-      effectivenessScore: studyPlans.effectivenessScore,
-      status: studyPlans.status,
-      isShared: studyPlans.isShared,
-      aiGenerated: studyPlans.aiGenerated,
-      createdAt: studyPlans.createdAt,
-      updatedAt: studyPlans.updatedAt,
-      lastAccessedAt: studyPlans.lastAccessedAt
-    }).from(studyPlans);
+      id: enhancedStudyPlans.id,
+      planId: enhancedStudyPlans.planId,
+      title: enhancedStudyPlans.title,
+      description: enhancedStudyPlans.description,
+      planType: enhancedStudyPlans.planType,
+      subject: enhancedStudyPlans.subject,
+      course: enhancedStudyPlans.course,
+      primaryGoal: enhancedStudyPlans.primaryGoal,
+      targetDate: enhancedStudyPlans.targetDate,
+      startDate: enhancedStudyPlans.startDate,
+      endDate: enhancedStudyPlans.endDate,
+      completionPercentage: enhancedStudyPlans.completionPercentage,
+      totalStudiedHours: enhancedStudyPlans.totalStudiedHours,
+      totalPlannedHours: enhancedStudyPlans.totalPlannedHours,
+      currentMilestone: enhancedStudyPlans.currentMilestone,
+      averageSessionRating: enhancedStudyPlans.averageSessionRating,
+      adherenceScore: enhancedStudyPlans.adherenceScore,
+      effectivenessScore: enhancedStudyPlans.effectivenessScore,
+      status: enhancedStudyPlans.status,
+      isShared: enhancedStudyPlans.isShared,
+      aiGenerated: enhancedStudyPlans.aiGenerated,
+      createdAt: enhancedStudyPlans.createdAt,
+      updatedAt: enhancedStudyPlans.updatedAt,
+      lastAccessedAt: enhancedStudyPlans.lastAccessedAt
+    }).from(enhancedStudyPlans);
 
     // Add filters
-    let conditions = [eq(studyPlans.userId, req.user.id)];
+    let conditions = [eq(enhancedStudyPlans.userId, req.user.id)];
 
     if (status && status !== 'all') {
-      conditions.push(eq(studyPlans.status, status));
+      conditions.push(eq(enhancedStudyPlans.status, status));
     }
 
     if (subject) {
-      conditions.push(eq(studyPlans.subject, subject));
+      conditions.push(eq(enhancedStudyPlans.subject, subject));
     }
 
     query = query.where(and(...conditions));
@@ -81,25 +74,25 @@ router.get('/plans', async (req, res) => {
     const orderDirection = order === 'desc' ? desc : asc;
     switch (sortBy) {
       case 'title':
-        query = query.orderBy(orderDirection(studyPlans.title));
+        query = query.orderBy(orderDirection(enhancedStudyPlans.title));
         break;
       case 'created':
-        query = query.orderBy(orderDirection(studyPlans.createdAt));
+        query = query.orderBy(orderDirection(enhancedStudyPlans.createdAt));
         break;
       case 'target':
-        query = query.orderBy(orderDirection(studyPlans.targetDate));
+        query = query.orderBy(orderDirection(enhancedStudyPlans.targetDate));
         break;
       case 'progress':
-        query = query.orderBy(orderDirection(studyPlans.completionPercentage));
+        query = query.orderBy(orderDirection(enhancedStudyPlans.completionPercentage));
         break;
       default:
-        query = query.orderBy(orderDirection(studyPlans.updatedAt));
+        query = query.orderBy(orderDirection(enhancedStudyPlans.updatedAt));
     }
 
     const plans = await query.limit(parseInt(limit)).offset(offset);
 
     // Get total count
-    const totalQuery = db.select({ count: count() }).from(studyPlans).where(and(...conditions));
+    const totalQuery = db.select({ count: count() }).from(enhancedStudyPlans).where(and(...conditions));
     const [{ count: totalCount }] = await totalQuery;
 
     res.json({
@@ -145,7 +138,7 @@ router.post('/plans', async (req, res) => {
       tags = []
     } = req.body;
 
-    const [newPlan] = await db.insert(studyPlans).values({
+    const [newPlan] = await db.insert(enhancedStudyPlans).values({
       userId: req.user.id,
       title,
       description,
@@ -187,11 +180,11 @@ router.get('/plans/:planId', async (req, res) => {
 
     // Get plan details
     const [plan] = await db.select()
-      .from(studyPlans)
+      .from(enhancedStudyPlans)
       .where(
         and(
-          eq(studyPlans.planId, planId),
-          eq(studyPlans.userId, req.user.id)
+          eq(enhancedStudyPlans.planId, planId),
+          eq(enhancedStudyPlans.userId, req.user.id)
         )
       );
 
@@ -207,9 +200,9 @@ router.get('/plans/:planId', async (req, res) => {
 
     // Get recent sessions
     const recentSessions = await db.select()
-      .from(studySessions)
-      .where(eq(studySessions.planId, plan.id))
-      .orderBy(desc(studySessions.actualStartTime))
+      .from(enhancedStudySessions)
+      .where(eq(enhancedStudySessions.planId, plan.id))
+      .orderBy(desc(enhancedStudySessions.actualStartTime))
       .limit(10);
 
     // Get upcoming calendar events
@@ -329,7 +322,7 @@ Format as JSON with the following structure:
     const aiPlan = JSON.parse(completion.choices[0].message.content);
 
     // Create the study plan
-    const [newPlan] = await db.insert(studyPlans).values({
+    const [newPlan] = await db.insert(enhancedStudyPlans).values({
       userId: req.user.id,
       title: aiPlan.title,
       description: aiPlan.description,
@@ -397,11 +390,11 @@ router.post('/sessions', async (req, res) => {
     // Verify plan ownership if provided
     if (planId) {
       const [plan] = await db.select()
-        .from(studyPlans)
+        .from(enhancedStudyPlans)
         .where(
           and(
-            eq(studyPlans.planId, planId),
-            eq(studyPlans.userId, req.user.id)
+            eq(enhancedStudyPlans.planId, planId),
+            eq(enhancedStudyPlans.userId, req.user.id)
           )
         );
 
@@ -410,9 +403,9 @@ router.post('/sessions', async (req, res) => {
       }
     }
 
-    const [newSession] = await db.insert(studySessions).values({
+    const [newSession] = await db.insert(enhancedStudySessions).values({
       userId: req.user.id,
-      planId: planId ? (await db.select().from(studyPlans).where(eq(studyPlans.planId, planId)))[0]?.id : null,
+      planId: planId ? (await db.select().from(enhancedStudyPlans).where(eq(enhancedStudyPlans.planId, planId)))[0]?.id : null,
       milestoneId,
       title,
       sessionType,
@@ -459,8 +452,8 @@ router.post('/sessions/:sessionId/complete', async (req, res) => {
 
     // Verify session ownership
     const [session] = await db.select()
-      .from(studySessions)
-      .where(eq(studySessions.sessionId, sessionId));
+      .from(enhancedStudySessions)
+      .where(eq(enhancedStudySessions.sessionId, sessionId));
 
     if (!session || session.userId !== req.user.id) {
       return res.status(403).json({ error: 'Access denied' });
@@ -469,7 +462,7 @@ router.post('/sessions/:sessionId/complete', async (req, res) => {
     const endTime = new Date();
     const actualDurationCalculated = actualDuration || Math.round((endTime - new Date(session.actualStartTime)) / 60000);
 
-    const [completedSession] = await db.update(studySessions)
+    const [completedSession] = await db.update(enhancedStudySessions)
       .set({
         actualEndTime: endTime,
         actualDuration: actualDurationCalculated,
@@ -490,18 +483,18 @@ router.post('/sessions/:sessionId/complete', async (req, res) => {
         completionStatus: 'completed',
         updatedAt: new Date()
       })
-      .where(eq(studySessions.sessionId, sessionId))
+      .where(eq(enhancedStudySessions.sessionId, sessionId))
       .returning();
 
     // Update plan statistics if session is linked to a plan
     if (session.planId) {
-      await db.update(studyPlans)
+      await db.update(enhancedStudyPlans)
         .set({
-          totalStudiedHours: sql`${studyPlans.totalStudiedHours} + ${actualDurationCalculated / 60}`,
+          totalStudiedHours: sql`${enhancedStudyPlans.totalStudiedHours} + ${actualDurationCalculated / 60}`,
           lastAccessedAt: new Date(),
           updatedAt: new Date()
         })
-        .where(eq(studyPlans.id, session.planId));
+        .where(eq(enhancedStudyPlans.id, session.planId));
     }
 
     res.json({
@@ -543,7 +536,7 @@ router.get('/calendar', async (req, res) => {
     }
 
     if (planId) {
-      const [plan] = await db.select().from(studyPlans).where(eq(studyPlans.planId, planId));
+      const [plan] = await db.select().from(enhancedStudyPlans).where(eq(enhancedStudyPlans.planId, planId));
       if (plan) {
         conditions.push(eq(studyCalendar.planId, plan.id));
       }
@@ -592,8 +585,8 @@ router.post('/calendar', async (req, res) => {
 
     const [newEvent] = await db.insert(studyCalendar).values({
       userId: req.user.id,
-      planId: planId ? (await db.select().from(studyPlans).where(eq(studyPlans.planId, planId)))[0]?.id : null,
-      sessionId: sessionId ? (await db.select().from(studySessions).where(eq(studySessions.sessionId, sessionId)))[0]?.id : null,
+      planId: planId ? (await db.select().from(enhancedStudyPlans).where(eq(enhancedStudyPlans.planId, planId)))[0]?.id : null,
+      sessionId: sessionId ? (await db.select().from(enhancedStudySessions).where(eq(enhancedStudySessions.sessionId, sessionId)))[0]?.id : null,
       title,
       description,
       eventType,
@@ -659,15 +652,15 @@ router.get('/analytics', async (req, res) => {
 
     // Get recent sessions for period analysis
     const recentSessions = await db.select()
-      .from(studySessions)
+      .from(enhancedStudySessions)
       .where(
         and(
-          eq(studySessions.userId, req.user.id),
-          gte(studySessions.actualStartTime, startDate),
-          eq(studySessions.status, 'completed')
+          eq(enhancedStudySessions.userId, req.user.id),
+          gte(enhancedStudySessions.actualStartTime, startDate),
+          eq(enhancedStudySessions.status, 'completed')
         )
       )
-      .orderBy(desc(studySessions.actualStartTime));
+      .orderBy(desc(enhancedStudySessions.actualStartTime));
 
     // Calculate period-specific metrics
     const periodMetrics = {
@@ -709,7 +702,7 @@ router.get('/recommendations', async (req, res) => {
     let conditions = [eq(adaptiveLearningRecommendations.userId, req.user.id)];
 
     if (planId) {
-      const [plan] = await db.select().from(studyPlans).where(eq(studyPlans.planId, planId));
+      const [plan] = await db.select().from(enhancedStudyPlans).where(eq(enhancedStudyPlans.planId, planId));
       if (plan) {
         conditions.push(eq(adaptiveLearningRecommendations.planId, plan.id));
       }

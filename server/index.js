@@ -206,10 +206,7 @@ async function startServer() {
   try {
     // Check database connection
     const dbConnected = await checkDatabaseConnection();
-    if (!dbConnected) {
-      console.error('Failed to connect to database. Exiting...');
-      process.exit(1);
-    }
+    const dbStatus = dbConnected ? 'Connected' : 'Offline Mode';
 
     server.listen(PORT, () => {
       console.log(`
@@ -217,7 +214,7 @@ async function startServer() {
 📡 Port: ${PORT}
 🌍 Environment: ${process.env.NODE_ENV || 'development'}
 🔗 Health Check: http://localhost:${PORT}/health
-💾 Database: Connected
+💾 Database: ${dbStatus}
 🔌 Socket.io: Ready
       `);
     });

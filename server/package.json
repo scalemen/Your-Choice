@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "node scripts/dev-start.js",
     "start": "node index.js",
+    "dev:watch": "nodemon index.js",
+    "db:migrate": "node scripts/migrate.js",
     "db:generate": "drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio"

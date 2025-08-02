@@ -3,7 +3,7 @@ import { relations } from 'drizzle-orm';
 import { users } from './schema.js';
 
 // Intelligent Study Plans with ML Recommendations
-export const studyPlans = pgTable('study_plans', {
+export const enhancedStudyPlans = pgTable('enhanced_study_plans', {
   id: serial('id').primaryKey(),
   planId: uuid('plan_id').defaultRandom().notNull().unique(),
   
@@ -84,7 +84,7 @@ export const studyMilestones = pgTable('study_milestones', {
   id: serial('id').primaryKey(),
   milestoneId: uuid('milestone_id').defaultRandom().notNull().unique(),
   
-  planId: integer('plan_id').references(() => studyPlans.id).notNull(),
+  planId: integer('plan_id').references(() => enhancedStudyPlans.id).notNull(),
   
   // Milestone details
   title: varchar('title', { length: 200 }).notNull(),
@@ -138,12 +138,12 @@ export const studyMilestones = pgTable('study_milestones', {
 }));
 
 // Study Sessions with Detailed Tracking
-export const studySessions = pgTable('study_sessions', {
+export const enhancedStudySessions = pgTable('enhanced_study_sessions', {
   id: serial('id').primaryKey(),
   sessionId: uuid('session_id').defaultRandom().notNull().unique(),
   
   userId: integer('user_id').references(() => users.id).notNull(),
-  planId: integer('plan_id').references(() => studyPlans.id),
+  planId: integer('plan_id').references(() => enhancedStudyPlans.id),
   milestoneId: integer('milestone_id').references(() => studyMilestones.id),
   
   // Session metadata
@@ -220,8 +220,8 @@ export const studyCalendar = pgTable('study_calendar', {
   eventId: uuid('event_id').defaultRandom().notNull().unique(),
   
   userId: integer('user_id').references(() => users.id).notNull(),
-  planId: integer('plan_id').references(() => studyPlans.id),
-  sessionId: integer('session_id').references(() => studySessions.id),
+  planId: integer('plan_id').references(() => enhancedStudyPlans.id),
+  sessionId: integer('session_id').references(() => enhancedStudySessions.id),
   
   // Event details
   title: varchar('title', { length: 200 }).notNull(),
@@ -403,7 +403,7 @@ export const adaptiveLearningRecommendations = pgTable('adaptive_learning_recomm
   recommendationId: uuid('recommendation_id').defaultRandom().notNull().unique(),
   
   userId: integer('user_id').references(() => users.id).notNull(),
-  planId: integer('plan_id').references(() => studyPlans.id),
+  planId: integer('plan_id').references(() => enhancedStudyPlans.id),
   
   // Recommendation details
   recommendationType: varchar('recommendation_type', { length: 50 }).notNull(), // schedule, content, method, pace
@@ -448,40 +448,40 @@ export const adaptiveLearningRecommendations = pgTable('adaptive_learning_recomm
 }));
 
 // Define relationships
-export const studyPlansRelations = relations(studyPlans, ({ one, many }) => ({
+export const enhancedStudyPlansRelations = relations(enhancedStudyPlans, ({ one, many }) => ({
   user: one(users, {
-    fields: [studyPlans.userId],
+    fields: [enhancedStudyPlans.userId],
     references: [users.id]
   }),
   milestones: many(studyMilestones),
-  sessions: many(studySessions),
+  sessions: many(enhancedStudySessions),
   calendarEvents: many(studyCalendar),
   recommendations: many(adaptiveLearningRecommendations)
 }));
 
 export const studyMilestonesRelations = relations(studyMilestones, ({ one, many }) => ({
-  plan: one(studyPlans, {
+  plan: one(enhancedStudyPlans, {
     fields: [studyMilestones.planId],
-    references: [studyPlans.id]
+    references: [enhancedStudyPlans.id]
   }),
-  sessions: many(studySessions)
+  sessions: many(enhancedStudySessions)
 }));
 
-export const studySessionsRelations = relations(studySessions, ({ one }) => ({
+export const enhancedStudySessionsRelations = relations(enhancedStudySessions, ({ one }) => ({
   user: one(users, {
-    fields: [studySessions.userId],
+    fields: [enhancedStudySessions.userId],
     references: [users.id]
   }),
-  plan: one(studyPlans, {
-    fields: [studySessions.planId],
-    references: [studyPlans.id]
+  plan: one(enhancedStudyPlans, {
+    fields: [enhancedStudySessions.planId],
+    references: [enhancedStudyPlans.id]
   }),
   milestone: one(studyMilestones, {
-    fields: [studySessions.milestoneId],
+    fields: [enhancedStudySessions.milestoneId],
     references: [studyMilestones.id]
   }),
   calendarEvent: one(studyCalendar, {
-    fields: [studySessions.id],
+    fields: [enhancedStudySessions.id],
     references: [studyCalendar.sessionId]
   })
 }));
@@ -491,13 +491,13 @@ export const studyCalendarRelations = relations(studyCalendar, ({ one }) => ({
     fields: [studyCalendar.userId],
     references: [users.id]
   }),
-  plan: one(studyPlans, {
+  plan: one(enhancedStudyPlans, {
     fields: [studyCalendar.planId],
-    references: [studyPlans.id]
+    references: [enhancedStudyPlans.id]
   }),
-  session: one(studySessions, {
+  session: one(enhancedStudySessions, {
     fields: [studyCalendar.sessionId],
-    references: [studySessions.id]
+    references: [enhancedStudySessions.id]
   })
 }));
 
@@ -520,8 +520,8 @@ export const adaptiveLearningRecommendationsRelations = relations(adaptiveLearni
     fields: [adaptiveLearningRecommendations.userId],
     references: [users.id]
   }),
-  plan: one(studyPlans, {
+  plan: one(enhancedStudyPlans, {
     fields: [adaptiveLearningRecommendations.planId],
-    references: [studyPlans.id]
+    references: [enhancedStudyPlans.id]
   })
 }));

@@ -1,17 +1,8 @@
 import express from 'express';
-import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like } from 'drizzle-orm';
 import { db } from '../db/index.js';
-import {
-  educationalGames,
-  gameSessions,
-  gameTournaments,
-  tournamentParticipants,
-  gameLeaderboards,
-  leaderboardEntries,
-  gameAchievements,
-  userGameAchievements,
-  gameAnalytics
-} from '../db/enhanced-gaming-schema.js';
+import { eq, desc, asc, count, and, or, gte, lte, inArray, sql, like } from 'drizzle-orm';
+// Tables accessed via db.schema
+// Tables accessed via db.schema
 import { authenticateUser } from '../middleware/auth.js';
 
 const router = express.Router();

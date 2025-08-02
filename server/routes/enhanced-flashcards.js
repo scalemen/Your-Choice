@@ -1,15 +1,8 @@
 import express from 'express';
-import { eq, desc, asc, count, and, or, gte, lte, inArray, sql } from 'drizzle-orm';
 import { db } from '../db/index.js';
-import {
-  flashcardDecks,
-  flashcards,
-  flashcardStudySessions,
-  cardReviews,
-  aiFlashcardGeneration,
-  spacedRepetitionAnalytics,
-  flashcardCollaborations
-} from '../db/enhanced-flashcard-schema.js';
+import { eq, desc, asc, count, and, or, gte, lte, inArray, sql } from 'drizzle-orm';
+// Tables accessed via db.schema
+// Tables accessed via db.schema
 import { authenticateUser } from '../middleware/auth.js';
 import OpenAI from 'openai';
 
@@ -30,23 +23,23 @@ router.get('/decks', async (req, res) => {
     const offset = (page - 1) * limit;
 
     let query = db.select({
-      id: flashcardDecks.id,
-      deckId: flashcardDecks.deckId,
-      title: flashcardDecks.title,
-      description: flashcardDecks.description,
-      subject: flashcardDecks.subject,
-      topic: flashcardDecks.topic,
-      difficulty: flashcardDecks.difficulty,
-      totalCards: flashcardDecks.totalCards,
-      matureCards: flashcardDecks.matureCards,
-      averageRetention: flashcardDecks.averageRetention,
-      lastStudied: flashcardDecks.lastStudied,
-      createdAt: flashcardDecks.createdAt,
-      updatedAt: flashcardDecks.updatedAt,
-      isPublic: flashcardDecks.isPublic,
-      rating: flashcardDecks.rating,
-      usageCount: flashcardDecks.usageCount
-    }).from(flashcardDecks);
+      id: enhancedFlashcardDecks.id,
+      deckId: enhancedFlashcardDecks.deckId,
+      title: enhancedFlashcardDecks.title,
+      description: enhancedFlashcardDecks.description,
+      subject: enhancedFlashcardDecks.subject,
+      topic: enhancedFlashcardDecks.topic,
+      difficulty: enhancedFlashcardDecks.difficulty,
+      totalCards: enhancedFlashcardDecks.totalCards,
+      matureCards: enhancedFlashcardDecks.matureCards,
+      averageRetention: enhancedFlashcardDecks.averageRetention,
+      lastStudied: enhancedFlashcardDecks.lastStudied,
+      createdAt: enhancedFlashcardDecks.createdAt,
+      updatedAt: enhancedFlashcardDecks.updatedAt,
+      isPublic: enhancedFlashcardDecks.isPublic,
+      rating: enhancedFlashcardDecks.rating,
+      usageCount: enhancedFlashcardDecks.usageCount
+    }).from(enhancedFlashcardDecks);
 
     // Add filters
     let conditions = [];
@@ -54,18 +47,18 @@ router.get('/decks', async (req, res) => {
     if (req.user.role !== 'admin') {
       conditions.push(
         or(
-          eq(flashcardDecks.createdBy, req.user.id),
-          eq(flashcardDecks.isPublic, true)
+          eq(enhancedFlashcardDecks.createdBy, req.user.id),
+          eq(enhancedFlashcardDecks.isPublic, true)
         )
       );
     }
 
     if (subject) {
-      conditions.push(eq(flashcardDecks.subject, subject));
+      conditions.push(eq(enhancedFlashcardDecks.subject, subject));
     }
 
     if (difficulty) {
-      conditions.push(eq(flashcardDecks.difficulty, difficulty));
+      conditions.push(eq(enhancedFlashcardDecks.difficulty, difficulty));
     }
 
     if (conditions.length > 0) {
@@ -76,25 +69,25 @@ router.get('/decks', async (req, res) => {
     const orderDirection = order === 'desc' ? desc : asc;
     switch (sortBy) {
       case 'title':
-        query = query.orderBy(orderDirection(flashcardDecks.title));
+        query = query.orderBy(orderDirection(enhancedFlashcardDecks.title));
         break;
       case 'created':
-        query = query.orderBy(orderDirection(flashcardDecks.createdAt));
+        query = query.orderBy(orderDirection(enhancedFlashcardDecks.createdAt));
         break;
       case 'rating':
-        query = query.orderBy(orderDirection(flashcardDecks.rating));
+        query = query.orderBy(orderDirection(enhancedFlashcardDecks.rating));
         break;
       case 'cards':
-        query = query.orderBy(orderDirection(flashcardDecks.totalCards));
+        query = query.orderBy(orderDirection(enhancedFlashcardDecks.totalCards));
         break;
       default:
-        query = query.orderBy(orderDirection(flashcardDecks.updatedAt));
+        query = query.orderBy(orderDirection(enhancedFlashcardDecks.updatedAt));
     }
 
     const decks = await query.limit(parseInt(limit)).offset(offset);
 
     // Get total count
-    const totalQuery = db.select({ count: count() }).from(flashcardDecks);
+    const totalQuery = db.select({ count: count() }).from(enhancedFlashcardDecks);
     if (conditions.length > 0) {
       totalQuery.where(and(...conditions));
     }
@@ -132,7 +125,7 @@ router.post('/decks', async (req, res) => {
       tags = []
     } = req.body;
 
-    const [newDeck] = await db.insert(flashcardDecks).values({
+    const [newDeck] = await db.insert(enhancedFlashcardDecks).values({
       title,
       description,
       subject,
@@ -164,8 +157,8 @@ router.get('/decks/:deckId', async (req, res) => {
 
     // Get deck info
     const [deck] = await db.select()
-      .from(flashcardDecks)
-      .where(eq(flashcardDecks.deckId, deckId));
+      .from(enhancedFlashcardDecks)
+      .where(eq(enhancedFlashcardDecks.deckId, deckId));
 
     if (!deck) {
       return res.status(404).json({ error: 'Deck not found' });
@@ -178,22 +171,22 @@ router.get('/decks/:deckId', async (req, res) => {
 
     let cards = [];
     if (includeCards === 'true') {
-      let cardQuery = db.select().from(flashcards)
-        .where(eq(flashcards.deckId, deck.id));
+      let cardQuery = db.select().from(enhancedFlashcards)
+        .where(eq(enhancedFlashcards.deckId, deck.id));
 
       // Sort cards
       switch (sortCards) {
         case 'due':
-          cardQuery = cardQuery.orderBy(asc(flashcards.dueDate));
+          cardQuery = cardQuery.orderBy(asc(enhancedFlashcards.dueDate));
           break;
         case 'difficulty':
-          cardQuery = cardQuery.orderBy(desc(flashcards.difficultyLevel));
+          cardQuery = cardQuery.orderBy(desc(enhancedFlashcards.difficultyLevel));
           break;
         case 'recent':
-          cardQuery = cardQuery.orderBy(desc(flashcards.lastReviewed));
+          cardQuery = cardQuery.orderBy(desc(enhancedFlashcards.lastReviewed));
           break;
         default:
-          cardQuery = cardQuery.orderBy(asc(flashcards.order));
+          cardQuery = cardQuery.orderBy(asc(enhancedFlashcards.order));
       }
 
       cards = await cardQuery;
@@ -230,8 +223,8 @@ router.post('/decks/:deckId/cards', async (req, res) => {
 
     // Verify deck ownership
     const [deck] = await db.select()
-      .from(flashcardDecks)
-      .where(eq(flashcardDecks.deckId, deckId));
+      .from(enhancedFlashcardDecks)
+      .where(eq(enhancedFlashcardDecks.deckId, deckId));
 
     if (!deck || deck.createdBy !== req.user.id) {
       return res.status(403).json({ error: 'Access denied' });
@@ -239,10 +232,10 @@ router.post('/decks/:deckId/cards', async (req, res) => {
 
     // Get next order number
     const [{ maxOrder }] = await db.select({
-      maxOrder: sql`COALESCE(MAX(${flashcards.order}), 0)`
-    }).from(flashcards).where(eq(flashcards.deckId, deck.id));
+      maxOrder: sql`COALESCE(MAX(${enhancedFlashcards.order}), 0)`
+    }).from(enhancedFlashcards).where(eq(enhancedFlashcards.deckId, deck.id));
 
-    const [newCard] = await db.insert(flashcards).values({
+    const [newCard] = await db.insert(enhancedFlashcards).values({
       deckId: deck.id,
       front,
       back,
@@ -258,12 +251,12 @@ router.post('/decks/:deckId/cards', async (req, res) => {
     }).returning();
 
     // Update deck card count
-    await db.update(flashcardDecks)
+    await db.update(enhancedFlashcardDecks)
       .set({ 
-        totalCards: sql`${flashcardDecks.totalCards} + 1`,
+        totalCards: sql`${enhancedFlashcardDecks.totalCards} + 1`,
         updatedAt: new Date()
       })
-      .where(eq(flashcardDecks.id, deck.id));
+      .where(eq(enhancedFlashcardDecks.id, deck.id));
 
     res.status(201).json({
       message: 'Flashcard created successfully',
@@ -283,24 +276,24 @@ router.put('/cards/:cardId', async (req, res) => {
 
     // Verify card ownership through deck
     const [card] = await db.select({
-      cardId: flashcards.cardId,
-      deckId: flashcards.deckId,
-      createdBy: flashcardDecks.createdBy
+      cardId: enhancedFlashcards.cardId,
+      deckId: enhancedFlashcards.deckId,
+      createdBy: enhancedFlashcardDecks.createdBy
     })
-    .from(flashcards)
-    .innerJoin(flashcardDecks, eq(flashcards.deckId, flashcardDecks.id))
-    .where(eq(flashcards.cardId, cardId));
+    .from(enhancedFlashcards)
+    .innerJoin(flashcardDecks, eq(enhancedFlashcards.deckId, enhancedFlashcardDecks.id))
+    .where(eq(enhancedFlashcards.cardId, cardId));
 
     if (!card || card.createdBy !== req.user.id) {
       return res.status(403).json({ error: 'Access denied' });
     }
 
-    const [updatedCard] = await db.update(flashcards)
+    const [updatedCard] = await db.update(enhancedFlashcards)
       .set({
         ...updateData,
         updatedAt: new Date()
       })
-      .where(eq(flashcards.cardId, cardId))
+      .where(eq(enhancedFlashcards.cardId, cardId))
       .returning();
 
     res.json({
@@ -323,8 +316,8 @@ router.get('/decks/:deckId/due-cards', async (req, res) => {
 
     // Verify deck access
     const [deck] = await db.select()
-      .from(flashcardDecks)
-      .where(eq(flashcardDecks.deckId, deckId));
+      .from(enhancedFlashcardDecks)
+      .where(eq(enhancedFlashcardDecks.deckId, deckId));
 
     if (!deck) {
       return res.status(404).json({ error: 'Deck not found' });
@@ -338,18 +331,18 @@ router.get('/decks/:deckId/due-cards', async (req, res) => {
 
     // Get due cards (reviews)
     const dueCards = await db.select()
-      .from(flashcards)
+      .from(enhancedFlashcards)
       .where(
         and(
-          eq(flashcards.deckId, deck.id),
+          eq(enhancedFlashcards.deckId, deck.id),
           or(
-            lte(flashcards.dueDate, now),
-            eq(flashcards.dueDate, null)
+            lte(enhancedFlashcards.dueDate, now),
+            eq(enhancedFlashcards.dueDate, null)
           ),
-          eq(flashcards.status, 'active')
+          eq(enhancedFlashcards.status, 'active')
         )
       )
-      .orderBy(asc(flashcards.dueDate))
+      .orderBy(asc(enhancedFlashcards.dueDate))
       .limit(parseInt(limit));
 
     // Get new cards if needed
@@ -358,15 +351,15 @@ router.get('/decks/:deckId/due-cards', async (req, res) => {
       const remainingSlots = Math.min(limit - dueCards.length, parseInt(newCards));
       
       newCardsToStudy = await db.select()
-        .from(flashcards)
+        .from(enhancedFlashcards)
         .where(
           and(
-            eq(flashcards.deckId, deck.id),
-            eq(flashcards.totalReviews, 0),
-            eq(flashcards.status, 'active')
+            eq(enhancedFlashcards.deckId, deck.id),
+            eq(enhancedFlashcards.totalReviews, 0),
+            eq(enhancedFlashcards.status, 'active')
           )
         )
-        .orderBy(asc(flashcards.order))
+        .orderBy(asc(enhancedFlashcards.order))
         .limit(remainingSlots);
     }
 
@@ -398,8 +391,8 @@ router.post('/decks/:deckId/study-sessions', async (req, res) => {
 
     // Verify deck access
     const [deck] = await db.select()
-      .from(flashcardDecks)
-      .where(eq(flashcardDecks.deckId, deckId));
+      .from(enhancedFlashcardDecks)
+      .where(eq(enhancedFlashcardDecks.deckId, deckId));
 
     if (!deck) {
       return res.status(404).json({ error: 'Deck not found' });
@@ -447,8 +440,8 @@ router.post('/sessions/:sessionId/reviews', async (req, res) => {
 
     // Get current card data
     const [card] = await db.select()
-      .from(flashcards)
-      .where(eq(flashcards.cardId, cardId));
+      .from(enhancedFlashcards)
+      .where(eq(enhancedFlashcards.cardId, cardId));
 
     if (!card) {
       return res.status(404).json({ error: 'Card not found' });
@@ -507,18 +500,18 @@ router.post('/sessions/:sessionId/reviews', async (req, res) => {
 
     // Update card statistics
     const isCorrect = ['good', 'easy'].includes(userResponse);
-    await db.update(flashcards).set({
+    await db.update(enhancedFlashcards).set({
       easeFactor: newEase,
       interval: newInterval,
       dueDate: newDueDate,
       lastReviewed: new Date(),
-      totalReviews: sql`${flashcards.totalReviews} + 1`,
-      correctReviews: isCorrect ? sql`${flashcards.correctReviews} + 1` : flashcards.correctReviews,
-      streakCount: isCorrect ? sql`${flashcards.streakCount} + 1` : 0,
-      lapseCount: !isCorrect ? sql`${flashcards.lapseCount} + 1` : flashcards.lapseCount,
-      totalStudyTime: sql`${flashcards.totalStudyTime} + ${Math.round(responseTime)}`,
-      averageResponseTime: sql`(${flashcards.averageResponseTime} * ${flashcards.totalReviews} + ${responseTime}) / (${flashcards.totalReviews} + 1)`
-    }).where(eq(flashcards.id, card.id));
+      totalReviews: sql`${enhancedFlashcards.totalReviews} + 1`,
+      correctReviews: isCorrect ? sql`${enhancedFlashcards.correctReviews} + 1` : enhancedFlashcards.correctReviews,
+      streakCount: isCorrect ? sql`${enhancedFlashcards.streakCount} + 1` : 0,
+      lapseCount: !isCorrect ? sql`${enhancedFlashcards.lapseCount} + 1` : enhancedFlashcards.lapseCount,
+      totalStudyTime: sql`${enhancedFlashcards.totalStudyTime} + ${Math.round(responseTime)}`,
+      averageResponseTime: sql`(${enhancedFlashcards.averageResponseTime} * ${enhancedFlashcards.totalReviews} + ${responseTime}) / (${enhancedFlashcards.totalReviews} + 1)`
+    }).where(eq(enhancedFlashcards.id, card.id));
 
     // Update session statistics
     await db.update(flashcardStudySessions).set({
@@ -566,7 +559,7 @@ router.post('/ai-generate', async (req, res) => {
     // Create generation record
     const [generation] = await db.insert(aiFlashcardGeneration).values({
       requestedBy: req.user.id,
-      deckId: deckId ? (await db.select().from(flashcardDecks).where(eq(flashcardDecks.deckId, deckId)))[0]?.id : null,
+      deckId: deckId ? (await db.select().from(enhancedFlashcardDecks).where(eq(enhancedFlashcardDecks.deckId, deckId)))[0]?.id : null,
       sourceType,
       sourceContent,
       sourceUrl,
@@ -603,7 +596,7 @@ Format each flashcard as JSON with the following structure:
   "difficultyLevel": 1-5 (1=easiest, 5=hardest)
 }
 
-Return only a JSON array of flashcards.`;
+Return only a JSON array of enhancedFlashcards.`;
 
       const completion = await openai.chat.completions.create({
         model: 'gpt-4',
@@ -671,8 +664,8 @@ router.post('/ai-generations/:generationId/accept', async (req, res) => {
 
     // Verify deck ownership
     const [deck] = await db.select()
-      .from(flashcardDecks)
-      .where(eq(flashcardDecks.deckId, deckId));
+      .from(enhancedFlashcardDecks)
+      .where(eq(enhancedFlashcardDecks.deckId, deckId));
 
     if (!deck || deck.createdBy !== req.user.id) {
       return res.status(403).json({ error: 'Access denied to deck' });
@@ -680,8 +673,8 @@ router.post('/ai-generations/:generationId/accept', async (req, res) => {
 
     // Get next order number
     const [{ maxOrder }] = await db.select({
-      maxOrder: sql`COALESCE(MAX(${flashcards.order}), 0)`
-    }).from(flashcards).where(eq(flashcards.deckId, deck.id));
+      maxOrder: sql`COALESCE(MAX(${enhancedFlashcards.order}), 0)`
+    }).from(enhancedFlashcards).where(eq(enhancedFlashcards.deckId, deck.id));
 
     // Insert selected cards
     const cardsToInsert = selectedCards.map((card, index) => ({
@@ -698,15 +691,15 @@ router.post('/ai-generations/:generationId/accept', async (req, res) => {
       dueDate: new Date() // New cards are due immediately
     }));
 
-    const insertedCards = await db.insert(flashcards).values(cardsToInsert).returning();
+    const insertedCards = await db.insert(enhancedFlashcards).values(cardsToInsert).returning();
 
     // Update deck card count
-    await db.update(flashcardDecks)
+    await db.update(enhancedFlashcardDecks)
       .set({ 
-        totalCards: sql`${flashcardDecks.totalCards} + ${selectedCards.length}`,
+        totalCards: sql`${enhancedFlashcardDecks.totalCards} + ${selectedCards.length}`,
         updatedAt: new Date()
       })
-      .where(eq(flashcardDecks.id, deck.id));
+      .where(eq(enhancedFlashcardDecks.id, deck.id));
 
     // Update generation record
     await db.update(aiFlashcardGeneration).set({
@@ -775,8 +768,8 @@ router.get('/decks/:deckId/analytics', async (req, res) => {
 
     // Verify deck access
     const [deck] = await db.select()
-      .from(flashcardDecks)
-      .where(eq(flashcardDecks.deckId, deckId));
+      .from(enhancedFlashcardDecks)
+      .where(eq(enhancedFlashcardDecks.deckId, deckId));
 
     if (!deck) {
       return res.status(404).json({ error: 'Deck not found' });
@@ -789,17 +782,17 @@ router.get('/decks/:deckId/analytics', async (req, res) => {
     // Get deck statistics
     const deckStats = await db.select({
       totalCards: count(),
-      avgEase: sql`AVG(${flashcards.easeFactor})`,
-      avgInterval: sql`AVG(${flashcards.interval})`,
-      matureCards: sql`COUNT(*) FILTER (WHERE ${flashcards.interval} >= 21)`,
-      newCards: sql`COUNT(*) FILTER (WHERE ${flashcards.totalReviews} = 0)`,
-      dueCards: sql`COUNT(*) FILTER (WHERE ${flashcards.dueDate} <= NOW())`,
+      avgEase: sql`AVG(${enhancedFlashcards.easeFactor})`,
+      avgInterval: sql`AVG(${enhancedFlashcards.interval})`,
+      matureCards: sql`COUNT(*) FILTER (WHERE ${enhancedFlashcards.interval} >= 21)`,
+      newCards: sql`COUNT(*) FILTER (WHERE ${enhancedFlashcards.totalReviews} = 0)`,
+      dueCards: sql`COUNT(*) FILTER (WHERE ${enhancedFlashcards.dueDate} <= NOW())`,
     })
-    .from(flashcards)
+    .from(enhancedFlashcards)
     .where(
       and(
-        eq(flashcards.deckId, deck.id),
-        eq(flashcards.status, 'active')
+        eq(enhancedFlashcards.deckId, deck.id),
+        eq(enhancedFlashcards.status, 'active')
       )
     );
 
