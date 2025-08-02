@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { db, users, notes, chatMessages, chatRooms, roomMemberships } from '../db/index.js';
 import { eq, and } from 'drizzle-orm';
 import { setupEnhancedSocialHandlers } from './enhanced-social.js';
+import { setupSocialMediaHandlers } from './socialMediaHandlers.js';
 
 // Store active connections and room states
 const activeConnections = new Map();
@@ -673,6 +674,11 @@ export function setupSocketHandlers(io) {
 
   // Setup enhanced social handlers
   setupEnhancedSocialHandlers(io);
+
+  // Setup social media handlers for each connection
+  io.on('connection', (socket) => {
+    setupSocialMediaHandlers(io, socket);
+  });
 
   console.log('✅ Socket.io handlers configured successfully');
 }

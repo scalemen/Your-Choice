@@ -21,7 +21,8 @@ import {
   RocketLaunchIcon,
   LightBulbIcon,
   BeakerIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  CameraIcon
 } from '@heroicons/react/24/outline';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
@@ -114,6 +115,12 @@ const navigationItems = [
     name: 'Games',
     href: '/dashboard/games',
     icon: BeakerIcon,
+    category: 'social'
+  },
+  {
+    name: 'StudyGram',
+    href: '/dashboard/social-media',
+    icon: CameraIcon,
     category: 'social'
   }
 ];
