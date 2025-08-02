@@ -1,0 +1,34 @@
+{
+  "name": "study-genius",
+  "version": "1.0.0",
+  "description": "The Ultimate Educational Platform - StudyGenius",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "client:dev": "cd client && npm run dev",
+    "server:dev": "cd server && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "db:push": "cd server && npm run db:push",
+    "db:generate": "cd server && npm run db:generate",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
+  "keywords": [
+    "education",
+    "learning",
+    "ai",
+    "collaboration",
+    "study",
+    "notes",
+    "chatbot"
+  ],
+  "author": "StudyGenius Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}
