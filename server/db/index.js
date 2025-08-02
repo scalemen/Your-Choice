@@ -9,6 +9,7 @@ import * as enhancedStudyPlannerSchema from './enhanced-study-planner-schema.js'
 import * as enhancedQuizSchema from './enhanced-quiz-schema.js';
 import * as enhancedFlashcardSchema from './enhanced-flashcard-schema.js';
 import * as enhancedGamingSchema from './enhanced-gaming-schema.js';
+import * as preloadedContentSchema from './preloaded-content-schema.js';
 import 'dotenv/config';
 
 // Create the connection
@@ -35,7 +36,8 @@ export const db = drizzle(client, {
     ...enhancedStudyPlannerSchema,
     ...enhancedQuizSchema,
     ...enhancedFlashcardSchema,
-    ...enhancedGamingSchema
+    ...enhancedGamingSchema,
+    ...preloadedContentSchema
   } 
 });
 
@@ -49,6 +51,7 @@ export * from './enhanced-study-planner-schema.js';
 export * from './enhanced-quiz-schema.js';
 export * from './enhanced-flashcard-schema.js';
 export * from './enhanced-gaming-schema.js';
+export * from './preloaded-content-schema.js';
 
 // Health check function
 export async function checkDatabaseConnection() {
