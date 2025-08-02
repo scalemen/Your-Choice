@@ -38,7 +38,7 @@ import {
   FireIcon as FireIconSolid
 } from '@heroicons/react/24/solid';
 import { toast } from 'react-hot-toast';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { cn } from '@/utils/cn';
 
 // Mock data interfaces
