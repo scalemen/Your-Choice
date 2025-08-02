@@ -32,6 +32,8 @@ import analyticsRoutes from './routes/analytics.js';
 import notificationRoutes from './routes/notifications.js';
 import personalizationRoutes from './routes/personalization.js';
 import leaderboardRoutes from './routes/leaderboards.js';
+import socialRoutes from './routes/social.js';
+import enhancedSocialRoutes from './routes/enhanced-social.js';
 
 // Import middleware
 import { authenticateUser } from './middleware/auth.js';
@@ -142,6 +144,8 @@ app.use('/api/analytics', authenticateUser, analyticsRoutes);
 app.use('/api/notifications', authenticateUser, notificationRoutes);
 app.use('/api/personalization', authenticateUser, personalizationRoutes);
 app.use('/api/leaderboards', authenticateUser, leaderboardRoutes);
+app.use('/api/social', authenticateUser, socialRoutes);
+app.use('/api/enhanced-social', authenticateUser, enhancedSocialRoutes);
 
 // File upload endpoint
 app.post('/api/upload', authenticateUser, uploadHandler, (req, res) => {

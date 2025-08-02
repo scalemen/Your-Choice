@@ -2,6 +2,7 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from './schema.js';
 import * as personalizationSchema from './personalization-schema.js';
+import * as enhancedSocialSchema from './enhanced-social-schema.js';
 import 'dotenv/config';
 
 // Create the connection
@@ -18,11 +19,18 @@ const client = postgres(connectionString, {
 });
 
 // Create drizzle instance
-export const db = drizzle(client, { schema: { ...schema, ...personalizationSchema } });
+export const db = drizzle(client, { 
+  schema: { 
+    ...schema, 
+    ...personalizationSchema,
+    ...enhancedSocialSchema
+  } 
+});
 
 // Export schema for use in other files
 export * from './schema.js';
 export * from './personalization-schema.js';
+export * from './enhanced-social-schema.js';
 
 // Health check function
 export async function checkDatabaseConnection() {

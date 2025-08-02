@@ -43,6 +43,7 @@ const Analytics = lazy(() => import('@/pages/analytics/Analytics'));
 const Leaderboards = lazy(() => import('@/pages/Leaderboards'));
 const Personalization = lazy(() => import('@/components/Personalization'));
 const Social = lazy(() => import('@/pages/Social'));
+const EnhancedSocial = lazy(() => import('@/pages/EnhancedSocial'));
 const Profile = lazy(() => import('@/pages/profile/Profile'));
 const Settings = lazy(() => import('@/pages/settings/Settings'));
 const Help = lazy(() => import('@/pages/help/Help'));
@@ -476,6 +477,18 @@ const App: React.FC = () => {
                       <ProtectedRoute>
                         <Layout>
                           <Social />
+                        </Layout>
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Enhanced Social (Discord-style) */}
+                  <Route
+                    path="/enhanced-social"
+                    element={
+                      <ProtectedRoute>
+                        <Layout>
+                          <EnhancedSocial />
                         </Layout>
                       </ProtectedRoute>
                     }
