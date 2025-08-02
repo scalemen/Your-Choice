@@ -1,0 +1,52 @@
+{
+  "score": 94.73684210526315,
+  "successes": 36,
+  "warnings": 1,
+  "errors": 1,
+  "details": {
+    "successes": [
+      "Required env var set: DATABASE_URL",
+      "Required env var set: JWT_SECRET",
+      "Required env var set: SESSION_SECRET",
+      "Optional env var set: NODE_ENV",
+      "Optional env var set: PORT",
+      "Optional env var set: CORS_ORIGIN",
+      "Dependency installed: express@^4.18.2",
+      "Dependency installed: drizzle-orm@^0.29.1",
+      "Dependency installed: postgres@^3.4.3",
+      "Dependency installed: multer@^1.4.5-lts.1",
+      "Dependency installed: sharp@^0.33.0",
+      "Dependency installed: express-rate-limit@^7.1.5",
+      "Dependency installed: express-validator@^7.0.1",
+      "Dependency installed: node-cache@^5.1.2",
+      "Dependency installed: socket.io@^4.7.4",
+      "Optional dependency available: fluent-ffmpeg@^2.1.3",
+      "Optional dependency available: node-cron@^3.0.3",
+      "Optional dependency available: bcryptjs@^2.4.3",
+      "Optional dependency available: jsonwebtoken@^9.0.2",
+      "Directory exists: uploads/social-media",
+      "Directory exists: db",
+      "Directory exists: routes",
+      "Directory exists: socket",
+      "Directory exists: ../src/pages",
+      "File exists: db/social-media-schema.js (15KB)",
+      "File exists: db/enhanced-social-media-schema.js (24KB)",
+      "File exists: routes/social-media.js (30KB)",
+      "File exists: routes/enhanced-social-media.js (40KB)",
+      "File exists: socket/socialMediaHandlers.js (17KB)",
+      "File exists: ../src/pages/SocialMediaPage.tsx (54KB)",
+      "Upload directory exists: uploads",
+      "Upload directory exists: uploads/social-media",
+      "Upload directory exists: uploads/social-media/2025-08-02",
+      "Upload directory is writable",
+      "Basic social-media-schema.js imports successfully",
+      "Enhanced social-media-schema.js imports successfully"
+    ],
+    "warnings": [
+      "Optional env var not set: OPENAI_API_KEY"
+    ],
+    "errors": [
+      "Database connection failed"
+    ]
+  }
+}

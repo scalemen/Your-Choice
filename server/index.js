@@ -34,6 +34,7 @@ import personalizationRoutes from './routes/personalization.js';
 import leaderboardRoutes from './routes/leaderboards.js';
 import socialRoutes from './routes/social.js';
 import socialMediaRoutes from './routes/social-media.js';
+import enhancedSocialMediaRoutes from './routes/enhanced-social-media.js';
 import enhancedSocialRoutes from './routes/enhanced-social.js';
 import enhancedNotesRoutes from './routes/enhanced-notes.js';
 import enhancedAiRoutes from './routes/enhanced-ai.js';
@@ -53,6 +54,7 @@ import { uploadHandler } from './middleware/upload.js';
 
 // Import socket handlers
 import { setupSocketHandlers } from './socket/index.js';
+import { setupSocialMediaHandlers } from './socket/socialMediaHandlers.js';
 
 // Import passport config
 import './config/passport.js';
@@ -157,6 +159,7 @@ app.use('/api/personalization', authenticateUser, personalizationRoutes);
 app.use('/api/leaderboards', authenticateUser, leaderboardRoutes);
 app.use('/api/social', authenticateUser, socialRoutes);
 app.use('/api/social-media', socialMediaRoutes);
+app.use('/api/enhanced-social-media', enhancedSocialMediaRoutes);
 app.use('/api/enhanced-social', authenticateUser, enhancedSocialRoutes);
 app.use('/api/enhanced-notes', authenticateUser, enhancedNotesRoutes);
 app.use('/api/enhanced-ai', authenticateUser, enhancedAiRoutes);
@@ -194,6 +197,7 @@ app.post('/api/upload', authenticateUser, uploadHandler, (req, res) => {
 
 // Socket.io connection handling
 setupSocketHandlers(io);
+setupSocialMediaHandlers(io);
 
 // Error handling middleware
 app.use(errorHandler);

@@ -187,6 +187,7 @@ const App: React.FC = () => {
                         {/* Professional Features */}
                                             <Route path="skills-assessment" element={<SkillsAssessmentPage />} />
                     <Route path="mentorship" element={<MentorshipPage />} />
+                    <Route path="social" element={<SocialMediaPage />} />
                     <Route path="social-media" element={<SocialMediaPage />} />
                         
                         {/* User Management */}
