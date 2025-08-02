@@ -30,6 +30,8 @@ import videoRoutes from './routes/video.js';
 import workspaceRoutes from './routes/workspaces.js';
 import analyticsRoutes from './routes/analytics.js';
 import notificationRoutes from './routes/notifications.js';
+import personalizationRoutes from './routes/personalization.js';
+import leaderboardRoutes from './routes/leaderboards.js';
 
 // Import middleware
 import { authenticateUser } from './middleware/auth.js';
@@ -138,6 +140,8 @@ app.use('/api/video', authenticateUser, videoRoutes);
 app.use('/api/workspaces', authenticateUser, workspaceRoutes);
 app.use('/api/analytics', authenticateUser, analyticsRoutes);
 app.use('/api/notifications', authenticateUser, notificationRoutes);
+app.use('/api/personalization', authenticateUser, personalizationRoutes);
+app.use('/api/leaderboards', authenticateUser, leaderboardRoutes);
 
 // File upload endpoint
 app.post('/api/upload', authenticateUser, uploadHandler, (req, res) => {
