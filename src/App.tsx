@@ -32,6 +32,7 @@ const PeerTutoringPage = React.lazy(() => import('@/pages/student-assistance/Pee
 const AnalyticsPage = React.lazy(() => import('@/pages/student-assistance/AnalyticsPage'))
 const SocialPage = React.lazy(() => import('@/pages/social/SocialPage'))
 const VideoPlatformPage = React.lazy(() => import('@/pages/VideoPlatformPage'))
+const StudyGramPage = React.lazy(() => import('@/pages/StudyGramPage'))
 const GamesPage = React.lazy(() => import('@/pages/games/GamesPage'))
 const SettingsPage = React.lazy(() => import('@/pages/settings/SettingsPage'))
 const ProfilePage = React.lazy(() => import('@/pages/profile/ProfilePage'))
@@ -181,6 +182,7 @@ const App: React.FC = () => {
                         {/* Social & Gaming */}
                         <Route path="social" element={<SocialPage />} />
                         <Route path="video-platform/*" element={<VideoPlatformPage />} />
+                        <Route path="studygram/*" element={<StudyGramPage />} />
                         <Route path="games" element={<GamesPage />} />
                         
                         {/* User Management */}

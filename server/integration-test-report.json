@@ -1,0 +1,60 @@
+{
+  "timestamp": "2025-08-03T01:37:56.706Z",
+  "results": {
+    "totalTests": 11,
+    "passed": 3,
+    "failed": 8,
+    "errors": [
+      {
+        "message": "✗ Database Connection failed",
+        "details": "Database connection failed",
+        "timestamp": "2025-08-03T01:37:56.592Z"
+      },
+      {
+        "message": "✗ Schema Integrity failed",
+        "details": "Table users is missing or inaccessible: query.getSQL is not a function",
+        "timestamp": "2025-08-03T01:37:56.593Z"
+      },
+      {
+        "message": "✗ Foreign Key Constraints failed",
+        "details": "Cannot read properties of undefined (reading 'channelId')",
+        "timestamp": "2025-08-03T01:37:56.593Z"
+      },
+      {
+        "message": "✗ API Endpoints failed",
+        "details": "Endpoint validation failed for /health: Invalid endpoint structure: /health",
+        "timestamp": "2025-08-03T01:37:56.593Z"
+      },
+      {
+        "message": "✗ Cross-platform Integration failed",
+        "details": "Shared user system integration failed",
+        "timestamp": "2025-08-03T01:37:56.609Z"
+      },
+      {
+        "message": "✗ Recommendation Engine failed",
+        "details": "Recommendation engine test failed: Cannot find package 'node-cache' imported from /workspace/server/services/RecommendationEngine.js",
+        "timestamp": "2025-08-03T01:37:56.612Z"
+      },
+      {
+        "message": "✗ Cache System failed",
+        "details": "Cache system test failed: Cannot find package 'node-cache' imported from /workspace/server/scripts/integration-test.js",
+        "timestamp": "2025-08-03T01:37:56.638Z"
+      },
+      {
+        "message": "✗ Database Performance failed",
+        "details": "Database performance test failed: query.getSQL is not a function",
+        "timestamp": "2025-08-03T01:37:56.638Z"
+      },
+      {
+        "message": "❌ Integration test failed. Critical issues need to be resolved.",
+        "details": null,
+        "timestamp": "2025-08-03T01:37:56.706Z"
+      }
+    ],
+    "warnings": [],
+    "coverage": {}
+  },
+  "healthScore": 20,
+  "duration": 132,
+  "successRate": 27.3
+}
