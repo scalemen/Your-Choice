@@ -43,6 +43,8 @@ import enhancedGamingRoutes from './routes/enhanced-gaming.js';
 import contentManagementRoutes from './routes/content-management.js';
 import classroomRoutes from './routes/classrooms.js';
 import studentAssistanceRoutes from './routes/student-assistance.js';
+import videoPlatformRoutes from './routes/video-platform.js';
+import studygramRoutes from './routes/studygram.js';
 
 // Import middleware
 import { authenticateUser } from './middleware/auth.js';
@@ -164,6 +166,8 @@ app.use('/api/enhanced-gaming', authenticateUser, enhancedGamingRoutes);
 app.use('/api/content-management', authenticateUser, contentManagementRoutes);
 app.use('/api/classrooms', authenticateUser, classroomRoutes);
 app.use('/api/student-assistance', authenticateUser, studentAssistanceRoutes);
+app.use('/api/video-platform', authenticateUser, videoPlatformRoutes);
+app.use('/api/studygram', authenticateUser, studygramRoutes);
 
 // File upload endpoint
 app.post('/api/upload', authenticateUser, uploadHandler, (req, res) => {

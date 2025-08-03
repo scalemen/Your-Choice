@@ -13,6 +13,7 @@ import * as preloadedContentSchema from './preloaded-content-schema.js';
 import * as classroomSchema from './classroom-schema.js';
 import * as studentAssistanceSchema from './student-assistance-schema.js';
 import * as videoPlatformSchema from './video-platform-schema.js';
+import * as socialMediaSchema from './social-media-schema.js';
 import 'dotenv/config';
 
 // Create the connection
@@ -43,7 +44,8 @@ export const db = drizzle(client, {
     ...preloadedContentSchema,
     ...classroomSchema,
     ...studentAssistanceSchema,
-    ...videoPlatformSchema
+    ...videoPlatformSchema,
+    ...socialMediaSchema
   } 
 });
 
@@ -61,6 +63,7 @@ export * from './preloaded-content-schema.js';
 export * from './classroom-schema.js';
 export * from './student-assistance-schema.js';
 export * from './video-platform-schema.js';
+export * from './social-media-schema.js';
 
 // Health check function
 export async function checkDatabaseConnection() {
