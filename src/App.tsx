@@ -37,6 +37,7 @@ const ProfilePage = React.lazy(() => import('@/pages/profile/ProfilePage'))
 const SkillsAssessmentPage = React.lazy(() => import('@/pages/SkillsAssessmentPage'))
 const MentorshipPage = React.lazy(() => import('@/pages/MentorshipPage'))
 const SocialMediaPage = React.lazy(() => import('@/pages/SocialMediaPage'))
+const VideoPlatformPage = React.lazy(() => import('@/pages/VideoPlatformPage'))
 const NotFoundPage = React.lazy(() => import('@/pages/NotFoundPage'))
 
 // Protected Route wrapper
@@ -187,8 +188,9 @@ const App: React.FC = () => {
                         {/* Professional Features */}
                                             <Route path="skills-assessment" element={<SkillsAssessmentPage />} />
                     <Route path="mentorship" element={<MentorshipPage />} />
-                    <Route path="social" element={<SocialMediaPage />} />
-                    <Route path="social-media" element={<SocialMediaPage />} />
+                                      <Route path="social" element={<SocialMediaPage />} />
+                  <Route path="social-media" element={<SocialMediaPage />} />
+                  <Route path="video-platform/*" element={<VideoPlatformPage />} />
                         
                         {/* User Management */}
                         <Route path="profile" element={<ProfilePage />} />

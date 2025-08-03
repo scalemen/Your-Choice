@@ -15,6 +15,7 @@ import * as studentAssistanceSchema from './student-assistance-schema.js';
 import * as professionalFeaturesSchema from './professional-features-schema.js';
 import * as socialMediaSchema from './social-media-schema.js';
 import * as enhancedSocialMediaSchema from './enhanced-social-media-schema.js';
+import * as videoPlatformSchema from './video-platform-schema.js';
 import 'dotenv/config';
 
 // Create the connection
@@ -47,7 +48,8 @@ export const db = drizzle(client, {
     ...studentAssistanceSchema,
     ...professionalFeaturesSchema,
     ...socialMediaSchema,
-    ...enhancedSocialMediaSchema
+    ...enhancedSocialMediaSchema,
+    ...videoPlatformSchema
   }
 });
 
@@ -67,6 +69,7 @@ export * from './student-assistance-schema.js';
 export * from './professional-features-schema.js';
 export * from './social-media-schema.js';
 export * from './enhanced-social-media-schema.js';
+export * from './video-platform-schema.js';
 
 // Health check function
 export async function checkDatabaseConnection() {

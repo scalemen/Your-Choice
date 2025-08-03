@@ -22,7 +22,8 @@ import {
   LightBulbIcon,
   BeakerIcon,
   GlobeAltIcon,
-  CameraIcon
+  CameraIcon,
+  PlayIcon
 } from '@heroicons/react/24/outline';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
@@ -121,6 +122,12 @@ const navigationItems = [
     name: 'StudyGram',
     href: '/dashboard/social-media',
     icon: CameraIcon,
+    category: 'social'
+  },
+  {
+    name: 'StudyTube',
+    href: '/dashboard/video-platform',
+    icon: PlayIcon,
     category: 'social'
   }
 ];
